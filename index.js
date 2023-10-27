@@ -3,6 +3,7 @@ import { registerRootComponent } from 'expo';
 import App from './App';
 import EnteryPoint from './EnteryPoint';
 import {decode, encode} from 'base-64'
+import 'react-native-gesture-handler';
 
 if (!global.btoa) {
     global.btoa = encode;

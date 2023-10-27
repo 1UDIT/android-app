@@ -1,7 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import Card from "../Components/card";
+
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
+
+
 
 const Home = ({ navigation }) => {
     const [data, Setdata] = useState();
@@ -29,15 +34,10 @@ const Home = ({ navigation }) => {
         getResult();
     }, []);
 
-
-
     return (
-        <View> 
-            <FlatList
-                onRefresh={() => getResult()}
-                refreshing={refresh}
+        <View style={styles.container}> 
+            <FlatList 
                 data={data}
-                keyExtractor={(news) => news.publishedAt + news.title}
                 renderItem={({ item }) => (
                     <Card
                         title={item.title}
@@ -50,4 +50,23 @@ const Home = ({ navigation }) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        paddingTop: 20,
+        flex: 1,
+        backgroundColor: "#ffcccc",
+        padding: 10,
+        paddingBottom: 50,
+        height: 100,
+        width: width
+    },
+    text: {
+        fontSize: 20,
+        textAlign: "center",
+        color: "#fc5c65",
+        marginBottom: 15,
+        fontWeight: "bold",
+    },
+});
 export default Home;

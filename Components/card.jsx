@@ -5,7 +5,11 @@ import {
   Image,
   Text,
   TouchableWithoutFeedback,
-} from "react-native"; 
+  Dimensions,
+} from "react-native";
+
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
 
 const Card = ({ title, subtitle, image, onPress }) => {
   return (
@@ -13,12 +17,12 @@ const Card = ({ title, subtitle, image, onPress }) => {
       <View style={styles.container}>
         <Image
           style={styles.image}
-          source={image}
+          source={{ uri: image }}
         />
         <View style={styles.detailsConatiner}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
-        </View> 
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -28,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 25,
     overflow: "hidden",
-    marginBottom: 20,
+    marginBottom: 20,     
   },
   image: {
     width: "100%",

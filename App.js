@@ -9,8 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text } from 'react-native';
 
 
-const myIcon = <Icon name="rocket" size={30} color="#900" />;
-console.log(Stack, "st")
+const myIcon = <Icon name="rocket" size={30} color="#900" />; 
 
 function HomeScreen() {
   return (
