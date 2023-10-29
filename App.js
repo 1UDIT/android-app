@@ -9,7 +9,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text } from 'react-native';
 
 
-const myIcon = <Icon name="rocket" size={30} color="#900" />; 
+const myIcon = <Icon name="rocket" size={30} color="#900" />;
+
+const Tab = createMaterialTopTabNavigator();
+const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
   return (
@@ -50,11 +54,6 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
-
-const Tab = createMaterialTopTabNavigator();
-const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator();
-
 function MyDrawer() {
   return (
     <Drawer.Navigator
@@ -66,6 +65,7 @@ function MyDrawer() {
         },
         headerTitle: () => <Text>TESTING APP</Text>,
       })}
+      initialRouteName="Feed"
     >
       <Drawer.Screen name="Feed" component={HomeScreen} />
       <Drawer.Screen name="Article" component={MyStack} />
