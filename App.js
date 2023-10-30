@@ -8,8 +8,11 @@ import ListingDetails from './Pages/NewsInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text } from 'react-native';
 
+const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
-const myIcon = <Icon name="rocket" size={30} color="#900" />; 
+const Tab = createMaterialTopTabNavigator();
+const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
   return (
@@ -51,33 +54,43 @@ function MyStack() {
   );
 }
 
-const Tab = createMaterialTopTabNavigator();
-const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator();
-
-function MyDrawer() {
-  return (
-    <Drawer.Navigator
-      screenOptions={({ navigation }) => ({
-        headerLeft: () => <Icon name='list' onPress={navigation.toggleDrawer} size={25} />,
-        drawerStyle: {
-          backgroundColor: '#c6cbef',
-          width: 240,
-        },
-        headerTitle: () => <Text>TESTING APP</Text>,
-      })}
-    >
-      <Drawer.Screen name="Feed" component={HomeScreen} />
-      <Drawer.Screen name="Article" component={MyStack} />
-    </Drawer.Navigator>
-  );
-}
+// function MyDrawer() {
+//   return (
+//     <Drawer.Navigator
+//       screenOptions={({ navigation }) => ({
+//         headerLeft: () => <Icon name='list' onPress={navigation.toggleDrawer} size={25} />,
+//         drawerStyle: {
+//           backgroundColor: '#c6cbef',
+//           width: 240,
+//         },
+//         headerTitle: () => <Text>TESTING APP</Text>,
+//       })}
+//       initialRouteName="Feed"
+//     >
+//       <Drawer.Screen name="Feed" component={HomeScreen} />
+//       <Drawer.Screen name="Article" component={MyStack} />
+//     </Drawer.Navigator>
+//   );
+// }
 
 
 export default function App() {
   return (
     <NavigationContainer>
-      <MyDrawer />
+      <Drawer.Navigator 
+        screenOptions={({ navigation }) => ({
+          headerLeft: () => <Icon name='list' onPress={navigation.toggleDrawer} size={25} />,
+          drawerStyle: {
+            backgroundColor: '#c6cbef',
+            width: 240,
+          },
+          headerTitle: () => <Text>TESTING APP</Text>,
+        })}
+        initialRouteName="Feed"
+      >
+        <Drawer.Screen name="Feed" component={HomeScreen} />
+        {/* <Drawer.Screen name="Article" component={MyStack} /> */}
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }

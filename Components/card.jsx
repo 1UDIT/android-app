@@ -21,7 +21,7 @@ const Card = ({ title, subtitle, image, onPress }) => {
         />
         <View style={styles.detailsConatiner}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>{subtitle}</Text>
+          <Text style={styles.subtitle} numberOfLines={2}>{subtitle}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -33,13 +33,16 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     overflow: "hidden",
     marginBottom: 20,     
+    flexDirection: 'row',
   },
   image: {
-    width: "100%",
+    width: "50%",
+    justifyContent: 'flex-start',
     height: 200,
   },
   detailsConatiner: {
-    padding: 20,
+    width: "50%", 
+    padding:10
   },
   subtitle: {
     fontSize: 15,

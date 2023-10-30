@@ -3,6 +3,7 @@ import App from './App';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 
 const EnteryPoint = () => (
     <SafeAreaView style={styles.safeArea}>

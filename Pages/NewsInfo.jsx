@@ -3,28 +3,50 @@ import {
   Image,
   Linking,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   View,
-} from "react-native";  
+} from "react-native";
 import AppButton from "../Components/AppButton";
 import Icon from "../Components/Icon";
 
 const ListingDetails = ({ route }) => {
-  console.log(route,"route");
+
+  const onShare = async (title) => {
+    //   try {
+    //     const result = await Share.share({
+    //       title: 'App link',
+    //       message: `${title} , AppLink :https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en', 
+    // url: 'https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en`
+    //     });
+    //     if (result.action === Share.sharedAction) {
+    //       if (result.activityType) {
+    //         // shared with activity type of result.activityType
+    //       } else {
+    //         // shared
+    //       }
+    //     } else if (result.action === Share.dismissedAction) {
+    //       // dismissed
+    //     }
+    //   } catch (error) {
+    //     alert(error.message);
+    //   }
+    Linking.openURL(`whatsapp://send?text=Check Out News About:\n${title} https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en', 
+    url: 'https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en`)
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Image style={styles.image} source={{ uri: route.params.profile_img}} />
+        <Image style={styles.image} source={{ uri: route.params.profile_img }} />
         <View style={styles.detailsContainer}>
           <Text style={styles.title}>{route.params.title}</Text>
           <Text style={styles.subtitle}>{route.params.description}</Text>
           <View style={styles.shareContainer}>
             <View style={styles.iconContainer}>
               <Icon
-                onPress={() =>
-                  Linking.openURL(`whatsapp://send?text=${route.params.title}`)
-                }
+                onPress={() => onShare(route.params.title)}
                 name={"whatsapp"}
                 size={40}
                 backgroundColor="#00cc00"
