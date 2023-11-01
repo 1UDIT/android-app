@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Home from './Screens/Home';
 import ListingDetails from './Screens/NewsInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -81,7 +81,7 @@ function RecommendationScreen() {
       <Stack.Screen name="Home" component={RecommendationList} />
     </Stack.Navigator>
   );
-} 
+}
 
 export default function App() {
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -89,21 +89,22 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator
         screenOptions={({ navigation }) => ({
-          headerLeft: () => <Icon name='list' onPress={navigation.toggleDrawer} size={25} />,
+          headerLeft: () => <Icon name='list-sharp' onPress={navigation.toggleDrawer} size={30} />,
           drawerStyle: {
             backgroundColor: '#c6cbef',
             width: 240,
           },
           headerStyle: {
-            height: 110
-          },
+            height: 110,
+            backgroundColor: 'white'
+          },  
           headerTitle: () =>
           (
             <View style={styles.container}>
               <View style={styles.detailsConatiner}>
-                <Text>TESTING APP</Text>
+                <Text style={styles.titleText}>TESTING APP</Text>
               </View>
-              <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsConatiner} />
+              <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsSearchBar} />
             </View>
           )
         })}
@@ -119,9 +120,22 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     width: width / 1.2,
+    marginTop: 20
   },
   detailsConatiner: {
     width: width / 1.5,
+    marginBottom: 20,
+    alignItems: "center",
+    fontWeight: 'bold',
+    color: "red", 
+  },
+  detailsSearchBar: {
+    width: width / 1.5,
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: "red", 
   },
 
 });

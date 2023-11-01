@@ -35,26 +35,6 @@ const ListingDetails = ({ route }) => {
               />
               <Text style={styles.logoText}>Whats App</Text>
             </View>
-            <View style={styles.iconContainer}>
-              <Icon
-                onPress={() => Linking.openURL(`sms:?body=${route.params.url}`)}
-                name={"message"}
-                size={40}
-                backgroundColor="gold"
-              />
-              <Text style={styles.logoText}>Message</Text>
-            </View>
-            <View style={styles.iconContainer}>
-              <Icon
-                onPress={() =>
-                  Linking.openURL(`mailto:?&body=${route.params.url}`)
-                }
-                name={"email"}
-                size={40}
-                backgroundColor="#3399ff"
-              />
-              <Text style={styles.logoText}>Email</Text>
-            </View>
           </View>
           <AppButton
             onPress={() => Linking.openURL(route.params.url)}
