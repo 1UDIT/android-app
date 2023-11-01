@@ -4,18 +4,16 @@ import { NavigationContainer, createNavigationContainerRef } from '@react-naviga
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Feather';
-import Home from './Pages/Home';
-import ListingDetails from './Pages/NewsInfo';
+import Home from './Screens/Home';
+import ListingDetails from './Screens/NewsInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
+import Scheduler from './Screens/Schedule';
+import RecommendationList from './Screens/Recommendation';
 var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
-
-
-
-const myIcon = <Icon name="rocket" size={30} color="#900" />;
+var height = Dimensions.get('window').height; //full height  
 
 const Tab = createMaterialTopTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -30,9 +28,9 @@ function HomeScreen() {
         activeTabStyle: {
           fontWeight: 'bold',
         },
-        tabBarLabelStyle: { 
-          fontSize: 11, 
-        }, 
+        tabBarLabelStyle: {
+          fontSize: 11,
+        },
       })}
     >
       <Tab.Screen
@@ -42,8 +40,8 @@ function HomeScreen() {
         name="feed"
         component={MyStack}
       />
-      <Tab.Screen name="Schedule" component={MyStack} />
-      <Tab.Screen name="Recommendation" component={MyStack} />
+      <Tab.Screen name="Schedule" component={Schedule} />
+      <Tab.Screen name="Recommendation" component={RecommendationScreen} />
     </Tab.Navigator>
   );
 }
@@ -64,25 +62,26 @@ function MyStack() {
   );
 }
 
-// function MyDrawer() {
-//   return (
-//     <Drawer.Navigator
-//       screenOptions={({ navigation }) => ({
-//         headerLeft: () => <Icon name='list' onPress={navigation.toggleDrawer} size={25} />,
-//         drawerStyle: {
-//           backgroundColor: '#c6cbef',
-//           width: 240,
-//         },
-//         headerTitle: () => <Text>TESTING APP</Text>,
-//       })}
-//       initialRouteName="Feed"
-//     >
-//       <Drawer.Screen name="Feed" component={HomeScreen} />
-//       <Drawer.Screen name="Article" component={MyStack} />
-//     </Drawer.Navigator>
-//   );
-// }
-
+function Schedule() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
+      <Stack.Screen name="Home" component={Scheduler} />
+    </Stack.Navigator>
+  );
+}
+function RecommendationScreen() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
+      <Stack.Screen name="Home" component={RecommendationList} />
+    </Stack.Navigator>
+  );
+} 
 
 export default function App() {
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -104,9 +103,9 @@ export default function App() {
               <View style={styles.detailsConatiner}>
                 <Text>TESTING APP</Text>
               </View>
-              <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsConatiner}/>
+              <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsConatiner} />
             </View>
-          ) 
+          )
         })}
         initialRouteName="Feed"
       >
@@ -118,11 +117,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    width: width/1.2,
+  container: {
+    width: width / 1.2,
   },
   detailsConatiner: {
-    width: width/1.5,
+    width: width / 1.5,
   },
 
 });
+
