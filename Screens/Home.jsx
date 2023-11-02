@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
-import Card from "../Components/card";
+import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import Card from "./Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';  
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -15,7 +15,7 @@ const Home = ({ navigation }) => {
     const [isOnline, setIsOnline] = useState(true);
     const [isLoading, setisLoading] = useState(true);
 
-    const getResult =async() => { 
+    const getResult = async () => {
         // Check internet connection
         // You can use NetInfo here, as shown in the previous response. 
 
@@ -43,39 +43,39 @@ const Home = ({ navigation }) => {
             try {
                 const value = await AsyncStorage.getItem('apiData');
                 if (value !== null) {
-              //    console.log(value,"AsyncStorage");                
-                 Setdata(value);                
+                    //    console.log(value,"AsyncStorage");                
+                    Setdata(value);
                 }
-              } catch (e) {
-                  console.error('Error retrieving data:', error)
-              }
+            } catch (e) {
+                console.error('Error retrieving data:', error)
+            }
         }
     }
 
     const getData = async () => {
         try {
-          const value = await AsyncStorage.getItem('apiData');
-          if (value !== null) {
-        //    console.log(value,"AsyncStorage");                
-           Setdata(value);                
-          }
+            const value = await AsyncStorage.getItem('apiData');
+            if (value !== null) {
+                //    console.log(value,"AsyncStorage");                
+                Setdata(value);
+            }
         } catch (e) {
             console.error('Error retrieving data:', error)
         }
-      };
+    };
 
     useEffect(() => {
         // Check internet connection
         const unsubscribe = NetInfo.addEventListener(state => {
-            setIsOnline(state.isConnected); 
+            setIsOnline(state.isConnected);
         });
 
         // Simulate fetching data from API
         if (isOnline) {
-            getResult(); 
+            getResult();
         }
 
-        if(isLoading === true){
+        if (isLoading === true) {
             getData();
         }
 
@@ -85,11 +85,11 @@ const Home = ({ navigation }) => {
         };
     }, [isOnline]);
 
-    
+
     return (
-        <View style={styles.container}>
+        <View style={styles.container}> 
             {
-                isLoading === true ? <Text>Loading Data</Text> :
+                isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     <FlatList
                         data={data}
                         renderItem={({ item }) => (
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         flex: 1,
         backgroundColor: "#f7f5f5",
-        padding: 10, 
+        padding: 10,
         height: height,
         width: width
     },
@@ -123,6 +123,15 @@ const styles = StyleSheet.create({
         color: "#fc5c65",
         marginBottom: 15,
         fontWeight: "bold",
+    },
+    Indicatorcontainer: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10,
     },
 });
 export default Home;

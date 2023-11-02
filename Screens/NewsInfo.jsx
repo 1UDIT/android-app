@@ -10,8 +10,9 @@ import {
 } from "react-native";
 import AppButton from "../Components/AppButton";
 import Icon from "../Components/Icon";
+import Icons from 'react-native-vector-icons/Ionicons';
 
-const ListingDetails = ({ route }) => {
+const ListingDetails = ({ route, navigation }) => {
 
   const onShare = async (title) => {
     Linking.openURL(`whatsapp://send?text=Check Out News About:\n${title} https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en', 
@@ -36,23 +37,25 @@ const ListingDetails = ({ route }) => {
               <Text style={styles.logoText}>Whats App</Text>
             </View>
           </View>
-          <AppButton
-            onPress={() => Linking.openURL(route.params.url)}
-            title={"Click here to read full news"}
-          />
+          <Icons style={styles.searchIcon} name="arrow-back" size={20} color="#000" onPress={()=>navigation.navigate('Home')}/>
         </View>
       </ScrollView>
     </View>
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingBottom: 5,
+  },
   image: {
     width: "100%",
     height: 250,
   },
-  container: {
-    flex: 1,
-    paddingBottom: 50,
+  searchIcon: {
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center"
   },
   detailsContainer: { padding: 20 },
   iconContainer: {

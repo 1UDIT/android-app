@@ -1,4 +1,6 @@
+import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
+import { useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -6,12 +8,15 @@ import {
   Text,
   TouchableWithoutFeedback,
   Dimensions,
+  BackHandler,
 } from "react-native";
+
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 const Card = ({ title, subtitle, image, onPress }) => {
+
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
@@ -23,6 +28,7 @@ const Card = ({ title, subtitle, image, onPress }) => {
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle} numberOfLines={2}>{subtitle}</Text>
         </View>
+        
       </View>
     </TouchableWithoutFeedback>
   );
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 25,
     overflow: "hidden",
-    marginBottom: 20,     
+    marginBottom: 20,
     flexDirection: 'row',
   },
   image: {
@@ -41,8 +47,8 @@ const styles = StyleSheet.create({
     height: 200,
   },
   detailsConatiner: {
-    width: "50%", 
-    padding:10
+    width: "50%",
+    padding: 10
   },
   subtitle: {
     fontSize: 15,

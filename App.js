@@ -1,17 +1,18 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Home from './Screens/Home';
 import ListingDetails from './Screens/NewsInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
 import Scheduler from './Screens/Schedule';
 import RecommendationList from './Screens/Recommendation';
+import RecommdatDetail from './Screens/Cards/RecommdatDetail';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height  
 
@@ -34,10 +35,7 @@ function HomeScreen() {
       })}
     >
       <Tab.Screen
-        options={{
-          title: "News Feed",
-        }}
-        name="feed"
+        name="News feed"
         component={MyStack}
       />
       <Tab.Screen name="Schedule" component={Schedule} />
@@ -79,39 +77,66 @@ function RecommendationScreen() {
       initialRouteName="Home"
     >
       <Stack.Screen name="Home" component={RecommendationList} />
+      <Stack.Screen
+        options={{ presentation: "modal" }}
+        name="RecommendationDetails"
+        component={RecommdatDetail}
+      />
     </Stack.Navigator>
   );
 }
 
 export default function App() {
   const [searchPhrase, setSearchPhrase] = useState("");
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        screenOptions={({ navigation }) => ({
-          headerLeft: () => <Icon name='list-sharp' onPress={navigation.toggleDrawer} size={30} />,
+        screenOptions={({ navigation }) => ({ 
+          headerRight: (props) => (
+            <View style={styles.IconBtncontainer}>
+              {
+                showSearchBar === false? <Icon name='search' onPress={() => setShowSearchBar(!showSearchBar)} size={30} />
+                :
+                <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsSearchBar} setShowSearchBar={setShowSearchBar}
+                showSearchBar={showSearchBar}/>
+              }
+             
+              {/* {showSearchBar && } */}
+            </View>
+            // <View style={styles.iconContainer}>
+            //   <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsSearchBar} />
+            // </View>
+          ),
+
+          headerLeft: (props) => (
+            <Pressable
+              android_ripple={{
+                color: '#666666',
+                foreground: true,
+                borderless: true,
+              }}
+              onPress={() => { navigation.openDrawer() }}>
+              <View style={styles.detailsConatiner}>
+                <Icon name='list-sharp' onPress={navigation.toggleDrawer} size={30} />
+              </View>
+            </Pressable>
+          ),
           drawerStyle: {
             backgroundColor: '#c6cbef',
             width: 240,
           },
           headerStyle: {
-            height: 110,
+            height: 90,
             backgroundColor: 'white'
-          },  
-          headerTitle: () =>
-          (
-            <View style={styles.container}>
-              <View style={styles.detailsConatiner}>
-                <Text style={styles.titleText}>TESTING APP</Text>
-              </View>
-              <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsSearchBar} />
-            </View>
-          )
+          },
+
         })}
         initialRouteName="Feed"
       >
         <Drawer.Screen name="Feed" component={HomeScreen} />
-        {/* <Drawer.Screen name="Article" component={MyStack} /> */}
+        <Drawer.Screen name="Article" component={MyStack} />
       </Drawer.Navigator >
     </NavigationContainer >
   );
@@ -122,20 +147,28 @@ const styles = StyleSheet.create({
     width: width / 1.2,
     marginTop: 20
   },
+  IconBtncontainer: { 
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    padding: 10,
+  },
+  iconContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    padding: 10,
+  },
   detailsConatiner: {
-    width: width / 1.5,
-    marginBottom: 20,
     alignItems: "center",
     fontWeight: 'bold',
-    color: "red", 
+    color: "red",
   },
   detailsSearchBar: {
-    width: width / 1.5,
+    width: width,
   },
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: "red", 
+    color: "red",
   },
 
 });
