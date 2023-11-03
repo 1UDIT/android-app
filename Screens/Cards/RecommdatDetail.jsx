@@ -62,22 +62,22 @@ const RecommdatDetail = () => (
 );
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    container: { 
+        flex:1,
         backgroundColor: 'lightgray',
+        flexDirection:"row",
     },
     cardContainer: {
+        flex:2,
         backgroundColor: 'white',
         borderRadius: 8,
         margin: 10,
         padding: 20,
-        alignItems: 'center',
-        flexDirection: 'row', // Align icon and text horizontally  
-        height:120
+        alignItems: 'center', 
     },
     poster: {
         width: 200,
-        height: 300,
+        height: 250,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
     },

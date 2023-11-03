@@ -13,6 +13,7 @@ import SearchBar from './Components/SearchBar';
 import Scheduler from './Screens/Schedule';
 import RecommendationList from './Screens/Recommendation';
 import RecommdatDetail from './Screens/Cards/RecommdatDetail';
+import ScreenIndex from './Screens/MovieScreen/ScreenIndex';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height  
 
@@ -36,7 +37,7 @@ function HomeScreen() {
     >
       <Tab.Screen
         name="News feed"
-        component={MyStack}
+        component={HomeView}
       />
       <Tab.Screen name="Schedule" component={Schedule} />
       <Tab.Screen name="Recommendation" component={RecommendationScreen} />
@@ -44,13 +45,29 @@ function HomeScreen() {
   );
 }
 
-function MyStack() {
+function HomeView() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
       initialRouteName="Home"
     >
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        options={{ presentation: "modal" }}
+        name="Info"
+        component={ListingDetails}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function MovieScreen() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
+      <Stack.Screen name="Home" component={ScreenIndex} />
       <Stack.Screen
         options={{ presentation: "modal" }}
         name="Info"
@@ -136,7 +153,7 @@ export default function App() {
         initialRouteName="Feed"
       >
         <Drawer.Screen name="Feed" component={HomeScreen} />
-        <Drawer.Screen name="Article" component={MyStack} />
+        <Drawer.Screen name="Movie" component={MovieScreen} />
       </Drawer.Navigator >
     </NavigationContainer >
   );

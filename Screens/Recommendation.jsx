@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'lightgray',
+        flexDirection: 'row', // Align icon and text horizontally 
     },
 });
 
