@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
-import Card from "./Cards/card";
+import Card from "../Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 
@@ -10,7 +10,7 @@ var height = Dimensions.get('window').height; //full height
 
 
 
-const Scheduler = ({ navigation }) => {
+const PresentSeason = ({ navigation }) => {
     const [data, Setdata] = useState();
     const [isOnline, setIsOnline] = useState(true);
     const [isLoading, setisLoading] = useState(true);
@@ -21,7 +21,7 @@ const Scheduler = ({ navigation }) => {
 
         if (isOnline) {
             // If there's internet connectivity, fetch and store new API data
-            axios.get(`https://app-api-u735.onrender.com/Scheduler`,
+            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?Season=Summer`,
                 {
                     auth: {
                         username: 'AnimeGo',
@@ -125,4 +125,4 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 });
-export default Scheduler;
+export default PresentSeason;
