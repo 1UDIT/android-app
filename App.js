@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useState } from "react";
-import { NavigationContainer } from '@react-navigation/native';
+import { CommonActions, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from './Screens/Home';
 import ListingDetails from './Screens/NewsInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
 import RecommendationList from './Screens/Recommendation';
@@ -82,14 +82,64 @@ function MovieScreen() {
   );
 }
 
-function SettingsScreen() {
+function SettingsScreen(props) {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const { state, descriptors, navigation } = props;
+  const buildLink = useLinkBuilder();
+
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="Home"
-    >
-      <Stack.Screen name="Home" component={Setting} />
-    </Stack.Navigator>
+    <DrawerContentScrollView {...props}>
+      {state.routes.map((route, i) => {
+        const isHidden = descriptors[route.key].options?.hidden; // <--- Added this line
+        if (isHidden === true) return null; // <--- Added this line
+         
+        const focused = i === state.index;
+        const {
+          title,
+          drawerLabel,
+          drawerIcon,
+          drawerActiveTintColor,
+          drawerInactiveTintColor,
+          drawerActiveBackgroundColor,
+          drawerInactiveBackgroundColor,
+          drawerLabelStyle,
+          drawerItemStyle,
+        } = descriptors[route.key].options;
+        return (
+          <DrawerItem
+            key={route.key}
+            label={drawerLabel !== undefined ? drawerLabel : title !== undefined ? title : route.name}
+            icon={drawerIcon}
+            focused={focused}
+            activeTintColor={drawerActiveTintColor}
+            inactiveTintColor={drawerInactiveTintColor}
+            activeBackgroundColor={drawerActiveBackgroundColor}
+            inactiveBackgroundColor={drawerInactiveBackgroundColor}
+            labelStyle={drawerLabelStyle}
+            style={drawerItemStyle}
+            to={buildLink(route.name, route.params)}
+            onPress={() => {
+              navigation.dispatch({
+                ...(focused
+                  ? DrawerActions.closeDrawer()
+                  : CommonActions.navigate(route.name)),
+                target: state.key,
+              });
+            }}
+          />
+        );
+      })}
+      <View style={styles.containerSwitch}>
+        <Switch
+          trackColor={{ false: '#767577', true: '#81b0ff' }}
+          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      </View>
+    </DrawerContentScrollView>
   );
 }
 
@@ -148,7 +198,7 @@ function RecommendationScreen() {
   );
 }
 
-export default function App() {
+export default function App(props) {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
 
@@ -166,7 +216,6 @@ export default function App() {
               }
             </View>
           ),
-
           headerLeft: (props) => (
             <Pressable
               android_ripple={{
@@ -188,13 +237,15 @@ export default function App() {
             height: 90,
             backgroundColor: 'white'
           },
-
         })}
         initialRouteName="Feed"
+        drawerContent={(props) => <SettingsScreen {...props} />}
       >
         <Drawer.Screen name="Feed" component={HomeScreen} />
         <Drawer.Screen name="Movie" component={MovieScreen} />
-        <Drawer.Screen name="Settings" component={SettingsScreen} />
+        <Drawer.Screen name="Settings" component={SettingsScreen} options={{
+          drawerLabel: () => null,
+        }} />
       </Drawer.Navigator >
     </NavigationContainer >
   );
@@ -227,6 +278,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: "red",
+  },
+  containerSwitch: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
 });
