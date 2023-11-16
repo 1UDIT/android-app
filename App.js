@@ -14,7 +14,8 @@ import SearchBar from './Components/SearchBar';
 import RecommendationList from './Screens/Recommendation';
 import RecommdatDetail from './Screens/Cards/RecommdatDetail';
 import ScreenIndex from './Screens/MovieScreen/ScreenIndex';
-import Setting from './Screens/Setting screen/Setting';
+import { get, save } from './storage';
+import colors from './colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PresentSeason from './Screens/Scheduler List/PresentSeason';
 import NextSeason from './Screens/Scheduler List/NextSeason';
@@ -85,15 +86,17 @@ function MovieScreen() {
 function SettingsScreen(props) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+
+
   const { state, descriptors, navigation } = props;
   const buildLink = useLinkBuilder();
 
   return (
     <DrawerContentScrollView {...props}>
       {state.routes.map((route, i) => {
-        const isHidden = descriptors[route.key].options?.hidden; // <--- Added this line
-        if (isHidden === true) return null; // <--- Added this line
-         
+        const isHidden = descriptors[route.key].options?.hidden;
+        if (isHidden === true) return null;
         const focused = i === state.index;
         const {
           title,
@@ -131,6 +134,7 @@ function SettingsScreen(props) {
         );
       })}
       <View style={styles.containerSwitch}>
+      <Text>Light </Text>
         <Switch
           trackColor={{ false: '#767577', true: '#81b0ff' }}
           thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
@@ -138,6 +142,7 @@ function SettingsScreen(props) {
           onValueChange={toggleSwitch}
           value={isEnabled}
         />
+        <Text>Dark</Text>
       </View>
     </DrawerContentScrollView>
   );
