@@ -8,7 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from './Screens/Home';
 import ListingDetails from './Screens/NewsInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Dimensions, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
 import RecommendationList from './Screens/Recommendation';
@@ -93,58 +93,64 @@ function SettingsScreen(props) {
   const buildLink = useLinkBuilder();
 
   return (
-    <DrawerContentScrollView {...props}>
-      {state.routes.map((route, i) => {
-        const isHidden = descriptors[route.key].options?.hidden;
-        if (isHidden === true) return null;
-        const focused = i === state.index;
-        const {
-          title,
-          drawerLabel,
-          drawerIcon,
-          drawerActiveTintColor,
-          drawerInactiveTintColor,
-          drawerActiveBackgroundColor,
-          drawerInactiveBackgroundColor,
-          drawerLabelStyle,
-          drawerItemStyle,
-        } = descriptors[route.key].options;
-        return (
-          <DrawerItem
-            key={route.key}
-            label={drawerLabel !== undefined ? drawerLabel : title !== undefined ? title : route.name}
-            icon={drawerIcon}
-            focused={focused}
-            activeTintColor={drawerActiveTintColor}
-            inactiveTintColor={drawerInactiveTintColor}
-            activeBackgroundColor={drawerActiveBackgroundColor}
-            inactiveBackgroundColor={drawerInactiveBackgroundColor}
-            labelStyle={drawerLabelStyle}
-            style={drawerItemStyle}
-            to={buildLink(route.name, route.params)}
-            onPress={() => {
-              navigation.dispatch({
-                ...(focused
-                  ? DrawerActions.closeDrawer()
-                  : CommonActions.navigate(route.name)),
-                target: state.key,
-              });
-            }}
-          />
-        );
-      })}
+    <View style={{ flex: 1 }}>
+      <DrawerContentScrollView {...props}>
+        {state.routes.map((route, i) => {
+          const isHidden = descriptors[route.key].options?.hidden;
+          if (isHidden === true) return null;
+          const focused = i === state.index;
+          const {
+            title,
+            drawerLabel,
+            drawerIcon,
+            drawerActiveTintColor,
+            drawerInactiveTintColor,
+            drawerActiveBackgroundColor,
+            drawerInactiveBackgroundColor,
+            drawerLabelStyle,
+            drawerItemStyle,
+          } = descriptors[route.key].options;
+          return (
+            <DrawerItem
+              key={route.key}
+              label={drawerLabel !== undefined ? drawerLabel : title !== undefined ? title : route.name}
+              icon={drawerIcon}
+              focused={focused}
+              activeTintColor={drawerActiveTintColor}
+              inactiveTintColor={drawerInactiveTintColor}
+              activeBackgroundColor={drawerActiveBackgroundColor}
+              inactiveBackgroundColor={drawerInactiveBackgroundColor}
+              labelStyle={drawerLabelStyle}
+              style={drawerItemStyle}
+              to={buildLink(route.name, route.params)}
+              onPress={() => {
+                navigation.dispatch({
+                  ...(focused
+                    ? DrawerActions.closeDrawer()
+                    : CommonActions.navigate(route.name)),
+                  target: state.key,
+                });
+              }}
+            />
+          );
+        })} 
+      </DrawerContentScrollView>
       <View style={styles.containerSwitch}>
-      <Text>Light </Text>
-        <Switch
-          trackColor={{ false: '#767577', true: '#81b0ff' }}
-          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
-        <Text>Dark</Text>
+        <TouchableOpacity onPress={() => { }} style={{ paddingVertical: 15 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={styles.switchText}>Light </Text>
+            <Switch
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+            <Text>Dark</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-    </DrawerContentScrollView>
+    </View>
   );
 }
 
@@ -284,11 +290,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: "red",
   },
-  containerSwitch: {
-    flex: 1,
+  containerSwitch: { 
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center', 
   },
+  switchText: {
+    flexDirection: "row",
+  }
 
 });
 
