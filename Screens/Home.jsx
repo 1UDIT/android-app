@@ -4,6 +4,7 @@ import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, View } from 
 import Card from "./Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';  
+import { useTheme } from "@react-navigation/native";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -14,6 +15,7 @@ const Home = ({ navigation }) => {
     const [data, Setdata] = useState();
     const [isOnline, setIsOnline] = useState(true);
     const [isLoading, setisLoading] = useState(true);
+    const theme = useTheme();
 
     const getResult = async () => {
         // Check internet connection
@@ -85,9 +87,10 @@ const Home = ({ navigation }) => {
         };
     }, [isOnline]);
 
+    console.log(theme);
 
     return (
-        <View style={styles.container}> 
+        <View style={[styles.container, { backgroundColor: theme.background }]}> 
             {
                 isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     <FlatList

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import MovieCard from '../Components/MovieCard';
+import { useTheme } from '@react-navigation/native';
 
 const genres = [
     { id: '1', genre: 'Action', iconName: 'rocket', },
@@ -11,8 +12,9 @@ const genres = [
 ];
 
 const RecommendationList = ({ navigation }) => {
+    const theme = useTheme();
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
             {genres.length == 2 ?
                 <FlatList
                     data={genres}

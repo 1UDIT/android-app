@@ -11,8 +11,10 @@ import {
 import AppButton from "../Components/AppButton";
 import Icon from "../Components/Icon";
 import Icons from 'react-native-vector-icons/Ionicons';
+import { useTheme } from "@react-navigation/native";
 
 const ListingDetails = ({ route, navigation }) => {
+  const theme = useTheme();
 
   const onShare = async (title) => {
     Linking.openURL(`whatsapp://send?text=Check Out News About:\n${title} https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en', 
@@ -20,7 +22,7 @@ const ListingDetails = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <ScrollView>
         <Image style={styles.image} source={{ uri: route.params.profile_img }} />
         <View style={styles.detailsContainer}>
