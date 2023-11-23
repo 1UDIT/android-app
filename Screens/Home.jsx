@@ -85,7 +85,13 @@ const Home = ({ navigation }) => {
         return () => {
             unsubscribe();
         };
+<<<<<<< HEAD
     }, [isOnline]); 
+=======
+    }, [isOnline]);
+
+    console.log(theme);
+>>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
 
     return (
         <View style={[styles.container, { backgroundColor: theme.background }]}> 
