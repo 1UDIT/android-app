@@ -58,7 +58,6 @@ const Home = ({ navigation }) => {
         try {
             const value = await AsyncStorage.getItem('apiData');
             if (value !== null) {
-                //    console.log(value,"AsyncStorage");                
                 Setdata(value);
             }
         } catch (e) {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import { CommonActions, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { get, save, saveString } from './storage';
 import { DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListingDetails from './Screens/NewsInfo';
@@ -11,8 +11,8 @@ import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
 import ScreenIndex from './Screens/MovieScreen/ScreenIndex';
 import { light, dark } from './colors';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './Navigation/TopNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height  
 
@@ -40,12 +40,24 @@ function SettingsScreen(props) {
   const { setTheme, theme } = React.useContext(ThemeContext);
   const colorScheme = Appearance.getColorScheme();
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
   // const toggleSwitch = () => setIsEnabled(() => setTheme(theme === 'Light' ? 'Dark' : 'Light'));
+  console.log(isEnabled, "isEnabled")
+
+  useEffect(() => {
+    get("Mode")
+      .then((data) => data)
+      .then((value) => setIsEnabled(value))
+      .catch((err) => console.log("AsyncStorageErr: " + err));
+  }, [theme])
+
   useEffect(() => {
     if (isEnabled === false) {
       setTheme('Light');
+      save('Mode', false);
     } else {
       setTheme('Dark');
+      save('Mode', true);
     }
   }, [isEnabled])
 
