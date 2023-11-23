@@ -1,21 +1,12 @@
 import * as React from 'react';
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { CommonActions, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
-=======
-import { useState, useCallback, useEffect } from "react";
-import { CommonActions, DarkTheme, DefaultTheme, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
->>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListingDetails from './Screens/NewsInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-<<<<<<< HEAD
 import { Appearance, Dimensions, Pressable, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
-=======
-import { Appearance, Dimensions, Pressable, StyleSheet, Switch, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
->>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
 import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
 import ScreenIndex from './Screens/MovieScreen/ScreenIndex';
@@ -51,15 +42,9 @@ function SettingsScreen(props) {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const toggleSwitch = () => setIsEnabled(() => setTheme(theme === 'Light' ? 'Dark' : 'Light'));
   useEffect(() => {
-<<<<<<< HEAD
     if (isEnabled === false) {
       setTheme('Light');
     } else {
-=======
-    if (isEnabled === false) { 
-      setTheme('Light');
-    } else { 
->>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
       setTheme('Dark');
     }
   }, [isEnabled])
@@ -131,48 +116,6 @@ function SettingsScreen(props) {
 }
 
 export const ThemeContext = React.createContext();
-<<<<<<< HEAD
-=======
-
-function Schedule() {
-  return (
-    <bottomTab.Navigator
-      initialRouteName="This Season"
-      screenOptions={() => ({
-        tabBarActiveTintColor: "#f5610a",
-        tabBarInactiveTintColor: "#555",
-        activeTabStyle: {
-          fontWeight: 'bold',
-        },
-        tabBarLabelStyle: {
-          fontSize: 11,
-        },
-        headerShown: false,
-        tabBarStyle: { height: 65 },
-      })}
-    >
-      <bottomTab.Screen
-        name="This Season"
-        component={PresentSeason}
-        options={{
-          tabBarLabel: 'This Season',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcon name='calendar-blank-outline' color={color} size={size} />
-          ),
-        }} />
-      <bottomTab.Screen
-        name="Next"
-        component={NextSeason}
-        options={{
-          tabBarLabel: 'Next Season',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcon name='page-next' color={color} size={size} />
-          ),
-        }} />
-    </bottomTab.Navigator>
-  );
-}
->>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
 
 
 export default function App() {
@@ -183,17 +126,11 @@ export default function App() {
   const themeData = { theme, setTheme };
   return (
     <ThemeContext.Provider value={themeData}>
-<<<<<<< HEAD
       <NavigationContainer theme={theme === 'Light' ? light : dark}>
         <Drawer.Navigator
           screenOptions={({ navigation }) => ({
             drawerActiveTintColor: theme === 'Light' ? light.colors.Activetext : dark.colors.Activetext,
             drawerInactiveTintColor: theme === 'Light' ? light.colors.InActivetext : dark.colors.InActivetext,
-=======
-      <NavigationContainer theme={theme == 'Light' ? DefaultTheme : DarkTheme}>
-        <Drawer.Navigator
-          screenOptions={({ navigation }) => ({
->>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
             headerRight: (props) => (
               <View style={styles.IconBtncontainer}>
                 {
@@ -218,20 +155,12 @@ export default function App() {
               </Pressable>
             ),
             drawerStyle: {
-<<<<<<< HEAD
               backgroundColor: theme === 'Light' ? light.colors.headerStyle : dark.colors.headerStyle,
-=======
-              backgroundColor: '#c6cbef',
->>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
               width: 240,
             },
             headerStyle: {
               height: 90,
-<<<<<<< HEAD
               backgroundColor: theme === 'Light' ? light.colors.headerStyle : dark.colors.headerStyle
-=======
-              backgroundColor: 'white'
->>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
             },
           })}
           initialRouteName="Feed"

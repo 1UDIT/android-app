@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import Card from "./Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NetInfo from '@react-native-community/netinfo';  
+import NetInfo from '@react-native-community/netinfo';
 import { useTheme } from "@react-navigation/native";
 
 var width = Dimensions.get('window').width; //full width
@@ -85,16 +85,10 @@ const Home = ({ navigation }) => {
         return () => {
             unsubscribe();
         };
-<<<<<<< HEAD
-    }, [isOnline]); 
-=======
     }, [isOnline]);
 
-    console.log(theme);
->>>>>>> 49aa2a353e8dffe2d5422598574f823253292e98
-
     return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}> 
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
             {
                 isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     <FlatList
