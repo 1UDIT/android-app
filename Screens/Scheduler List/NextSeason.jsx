@@ -4,6 +4,7 @@ import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import Card from "../Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import { useTheme } from "@react-navigation/native";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -11,6 +12,7 @@ var height = Dimensions.get('window').height; //full height
 
 
 const NextSeason = ({ navigation }) => {
+    const theme = useTheme();
     const [data, Setdata] = useState();
     const [isOnline, setIsOnline] = useState(true);
     const [isLoading, setisLoading] = useState(true);
@@ -87,7 +89,7 @@ const NextSeason = ({ navigation }) => {
 
     
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
             {
                 isLoading === true ? <Text>Loading Data</Text> :
                     <FlatList
