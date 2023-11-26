@@ -14,8 +14,7 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 const Card = ({ title, subtitle, image, onPress }) => {
-  const theme = useTheme(); 
- 
+
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
@@ -23,10 +22,11 @@ const Card = ({ title, subtitle, image, onPress }) => {
           style={styles.image}
           source={{ uri: image }}
         />
-        <View style={[styles.detailsConatiner, { backgroundColor: theme.colors.card }]}>
-          <Text style={[styles.title,{color:theme.colors.text}]}>{title}</Text>
-          <Text style={[styles.subtitle,{color:theme.colors.text}]} numberOfLines={2}>{subtitle}</Text>
-        </View>        
+        <View style={styles.detailsConatiner}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subtitle} numberOfLines={2}>{subtitle}</Text>
+        </View>
+        
       </View>
     </TouchableWithoutFeedback>
   );
