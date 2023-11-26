@@ -1,71 +1,23 @@
 import * as React from 'react';
-import { useState, useCallback, useEffect } from "react";
-import { CommonActions, DarkTheme, DefaultTheme, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
+import { useState, useEffect } from "react";
+import { CommonActions, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
+import { get, save, saveString } from './storage';
+import { DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Home from './Screens/Home';
 import ListingDetails from './Screens/NewsInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Appearance, Dimensions, Pressable, StyleSheet, Switch, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
+import { Appearance, Dimensions, Pressable, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
-import RecommendationList from './Screens/Recommendation';
-import RecommdatDetail from './Screens/Cards/RecommdatDetail';
 import ScreenIndex from './Screens/MovieScreen/ScreenIndex';
-import { get, save } from './storage';
-import colors from './colors';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import PresentSeason from './Screens/Scheduler List/PresentSeason';
-import NextSeason from './Screens/Scheduler List/NextSeason';
+import { light, dark } from './colors';
+import HomeScreen from './Navigation/TopNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height  
 
-const Tab = createMaterialTopTabNavigator();
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
-const bottomTab = createBottomTabNavigator();
-
-function HomeScreen() {
-  return (
-    <Tab.Navigator
-      screenOptions={() => ({
-        tabBarActiveTintColor: "#f5610a",
-        tabBarInactiveTintColor: "#555",
-        activeTabStyle: {
-          fontWeight: 'bold',
-        },
-        tabBarLabelStyle: {
-          fontSize: 11,
-        },
-      })}
-    >
-      <Tab.Screen
-        name="News feed"
-        component={HomeView}
-      />
-      <Tab.Screen name="Seasonal" component={Schedule} />
-      <Tab.Screen name="Recommendation" component={RecommendationScreen} />
-    </Tab.Navigator>
-  );
-}
-
-function HomeView() {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="Home"
-    >
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen
-        options={{ presentation: "modal" }}
-        name="Info"
-        component={ListingDetails}
-      />
-    </Stack.Navigator>
-  );
-}
 
 function MovieScreen() {
   return (
@@ -88,12 +40,23 @@ function SettingsScreen(props) {
   const { setTheme, theme } = React.useContext(ThemeContext);
   const colorScheme = Appearance.getColorScheme();
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  // const toggleSwitch = () => setIsEnabled(() => setTheme(theme === 'Light' ? 'Dark' : 'Light'));
+
+  // const toggleSwitch = () => setIsEnabled(() => setTheme(theme === 'Light' ? 'Dark' : 'Light'));   
+
   useEffect(() => {
-    if (isEnabled === false) { 
+    get("Mode")
+      .then((data) => data)
+      .then((value) => setIsEnabled(value))
+      .catch((err) => console.log("AsyncStorageErr: " + err));
+  }, [theme])
+
+  useEffect(() => {
+    if (isEnabled === false) {
       setTheme('Light');
-    } else { 
+      save('Mode', false);
+    } else {
       setTheme('Dark');
+      save('Mode', true);
     }
   }, [isEnabled])
 
@@ -165,60 +128,6 @@ function SettingsScreen(props) {
 
 export const ThemeContext = React.createContext();
 
-function Schedule() {
-  return (
-    <bottomTab.Navigator
-      initialRouteName="This Season"
-      screenOptions={() => ({
-        tabBarActiveTintColor: "#f5610a",
-        tabBarInactiveTintColor: "#555",
-        activeTabStyle: {
-          fontWeight: 'bold',
-        },
-        tabBarLabelStyle: {
-          fontSize: 11,
-        },
-        headerShown: false,
-        tabBarStyle: { height: 65 },
-      })}
-    >
-      <bottomTab.Screen
-        name="This Season"
-        component={PresentSeason}
-        options={{
-          tabBarLabel: 'This Season',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcon name='calendar-blank-outline' color={color} size={size} />
-          ),
-        }} />
-      <bottomTab.Screen
-        name="Next"
-        component={NextSeason}
-        options={{
-          tabBarLabel: 'Next Season',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcon name='page-next' color={color} size={size} />
-          ),
-        }} />
-    </bottomTab.Navigator>
-  );
-}
-
-function RecommendationScreen() {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="Home"
-    >
-      <Stack.Screen name="Home" component={RecommendationList} />
-      <Stack.Screen
-        options={{ presentation: "modal" }}
-        name="RecommendationDetails"
-        component={RecommdatDetail}
-      />
-    </Stack.Navigator>
-  );
-}
 
 export default function App() {
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -228,9 +137,11 @@ export default function App() {
   const themeData = { theme, setTheme };
   return (
     <ThemeContext.Provider value={themeData}>
-      <NavigationContainer theme={theme == 'Light' ? DefaultTheme : DarkTheme}>
+      <NavigationContainer theme={theme === 'Light' ? light : dark}>
         <Drawer.Navigator
           screenOptions={({ navigation }) => ({
+            drawerActiveTintColor: theme === 'Light' ? light.colors.Activetext : dark.colors.Activetext,
+            drawerInactiveTintColor: theme === 'Light' ? light.colors.InActivetext : dark.colors.InActivetext,
             headerRight: (props) => (
               <View style={styles.IconBtncontainer}>
                 {
@@ -255,12 +166,12 @@ export default function App() {
               </Pressable>
             ),
             drawerStyle: {
-              backgroundColor: '#c6cbef',
+              backgroundColor: theme === 'Light' ? light.colors.headerStyle : dark.colors.headerStyle,
               width: 240,
             },
             headerStyle: {
               height: 90,
-              backgroundColor: 'white'
+              backgroundColor: theme === 'Light' ? light.colors.headerStyle : dark.colors.headerStyle
             },
           })}
           initialRouteName="Feed"

@@ -13,23 +13,10 @@ import {
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-const Card = ({ title, subtitle, image, onPress }) => {
+const MovieList = ({swiperRef, data, item }) => {
   const theme = useTheme(); 
- 
-  return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{ uri: image }}
-        />
-        <View style={[styles.detailsConatiner, { backgroundColor: theme.colors.card }]}>
-          <Text style={[styles.title,{color:theme.colors.text}]}>{title}</Text>
-          <Text style={[styles.subtitle,{color:theme.colors.text}]} numberOfLines={2}>{subtitle}</Text>
-        </View>        
-      </View>
-    </TouchableWithoutFeedback>
-  );
+ console.log(item,"title, subtitle, image, onPress")
+   
 };
 const styles = StyleSheet.create({
   container: {
@@ -59,4 +46,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-export default Card;
+export default MovieList;

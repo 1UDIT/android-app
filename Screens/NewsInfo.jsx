@@ -7,8 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import AppButton from "../Components/AppButton";
+} from "react-native"; 
 import Icon from "../Components/Icon";
 import Icons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from "@react-navigation/native";
@@ -26,8 +25,8 @@ const ListingDetails = ({ route, navigation }) => {
       <ScrollView>
         <Image style={styles.image} source={{ uri: route.params.profile_img }} />
         <View style={styles.detailsContainer}>
-          <Text style={styles.title}>{route.params.title}</Text>
-          <Text style={styles.subtitle}>{route.params.description}</Text>
+          <Text style={[styles.title,{color:theme.colors.text}]}>{route.params.title}</Text>
+          <Text style={[styles.subtitle,{color:theme.colors.text}]}>{route.params.description}</Text>
           <View style={styles.shareContainer}>
             <View style={styles.iconContainer}>
               <Icon
@@ -36,7 +35,7 @@ const ListingDetails = ({ route, navigation }) => {
                 size={40}
                 backgroundColor="#00cc00"
               />
-              <Text style={styles.logoText}>Whats App</Text>
+              <Text style={[styles.logoText,{color:theme.colors.text}]}>Whats App</Text>
             </View>
           </View>
           <Icons style={styles.searchIcon} name="arrow-back" size={20} color="#000" onPress={()=>navigation.navigate('Home')}/>

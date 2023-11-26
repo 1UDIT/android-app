@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import Card from "../Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import { useTheme } from "@react-navigation/native";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -11,6 +12,7 @@ var height = Dimensions.get('window').height; //full height
 
 
 const PresentSeason = ({ navigation }) => {
+    const theme = useTheme();
     const [data, Setdata] = useState();
     const [isOnline, setIsOnline] = useState(true);
     const [isLoading, setisLoading] = useState(true);
@@ -21,7 +23,7 @@ const PresentSeason = ({ navigation }) => {
 
         if (isOnline) {
             // If there's internet connectivity, fetch and store new API data
-            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?Season=Summer`,
+            axios.get(`https://shiny-colt-overalls.cyclic.app/Scheduler/data?Season=Summer`,
                 {
                     auth: {
                         username: 'AnimeGo',
@@ -87,9 +89,9 @@ const PresentSeason = ({ navigation }) => {
 
     
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
             {
-                isLoading === true ? <Text>Loading Data</Text> :
+                isLoading === true ?  <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     <FlatList
                         data={data}
                         renderItem={({ item }) => (

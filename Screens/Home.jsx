@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import Card from "./Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NetInfo from '@react-native-community/netinfo';  
+import NetInfo from '@react-native-community/netinfo';
 import { useTheme } from "@react-navigation/native";
 
 var width = Dimensions.get('window').width; //full width
@@ -23,7 +23,7 @@ const Home = ({ navigation }) => {
 
         if (isOnline) {
             // If there's internet connectivity, fetch and store new API data
-            axios.get(`https://app-api-u735.onrender.com/Scheduler`,
+            axios.get(`https://shiny-colt-overalls.cyclic.app/Scheduler`,
                 {
                     auth: {
                         username: 'AnimeGo',
@@ -58,7 +58,6 @@ const Home = ({ navigation }) => {
         try {
             const value = await AsyncStorage.getItem('apiData');
             if (value !== null) {
-                //    console.log(value,"AsyncStorage");                
                 Setdata(value);
             }
         } catch (e) {
@@ -87,10 +86,8 @@ const Home = ({ navigation }) => {
         };
     }, [isOnline]);
 
-    console.log(theme);
-
     return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}> 
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
             {
                 isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     <FlatList
