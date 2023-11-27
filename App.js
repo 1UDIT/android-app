@@ -41,8 +41,7 @@ function SettingsScreen(props) {
   const colorScheme = Appearance.getColorScheme();
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  // const toggleSwitch = () => setIsEnabled(() => setTheme(theme === 'Light' ? 'Dark' : 'Light'));
-  console.log(isEnabled, "isEnabled")
+  // const toggleSwitch = () => setIsEnabled(() => setTheme(theme === 'Light' ? 'Dark' : 'Light'));   
 
   useEffect(() => {
     get("Mode")

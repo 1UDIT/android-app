@@ -1,24 +1,23 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
-import Card from "../Cards/MovieCard";
+import React, { useState, useRef, useEffect } from 'react';
+import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
+import Swiper from 'react-native-deck-swiper';
+import { useTheme } from '@react-navigation/native';
+import MovieList from '../Cards/MovieList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NetInfo from '@react-native-community/netinfo';   
+import NetInfo from '@react-native-community/netinfo';
+import axios from 'axios'; 
 
-
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
-
-
-
-const Home = ({ navigation }) => {
-    const [data, Setdata] = useState();
+const TinderSwipe = ({ navigation }) => {
+    const [data, Setdata] = useState([]);
     const [isOnline, setIsOnline] = useState(true);
     const [isLoading, setisLoading] = useState(true);
+    const [dataIsReturned, setDataIsReturned] = useState(false)
+    const [cardIndex, setCardIndex] = useState(0);
+    const theme = useTheme();
+    const swiperRef = useRef(null);
+    var cardStack = undefined; // Store off a reference of the swiper.
 
     const getResult = async () => {
-        // Check internet connection
-        // You can use NetInfo here, as shown in the previous response. 
 
         if (isOnline) {
             // If there's internet connectivity, fetch and store new API data
@@ -57,7 +56,6 @@ const Home = ({ navigation }) => {
         try {
             const value = await AsyncStorage.getItem('apiData');
             if (value !== null) {
-                //    console.log(value,"AsyncStorage");                
                 Setdata(value);
             }
         } catch (e) {
@@ -84,55 +82,97 @@ const Home = ({ navigation }) => {
         return () => {
             unsubscribe();
         };
-    }, [isOnline]);
+    }, [isOnline, cardIndex]);
 
+    useEffect(() => {
+        if (data !== undefined && data.length > 0) {
+            setDataIsReturned(true)
+        } else {
+            setDataIsReturned(false)
+        }
+    }, [data, cardIndex])
 
-    return (
-        <View style={styles.container}> 
-            {
-                isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
-                    <FlatList
-                        data={data}
-                        renderItem={({ item }) => (
-                            <Card
+    // console.log(cardIndex, 'length', cardIndex === data.length);
+
+    const getCardBack = (index) => {
+        // Handle swipes, e.g., remove the card from the array
+        if (data !== undefined) {
+            setCardIndex(index + 1);
+            console.log(index, 'cardIndex', cardIndex);
+        };
+    }
+
+    const renderCard = (card) => {
+        return (
+            <View style={styles.card} key={card._id} onPoress>
+                <Text style={styles.cardText}>{card.title}</Text>
+            </View>
+        );
+    };
+
+    const onSwipedAll = () => {
+        Setdata(data); // Update with the new cards that we want, but it won't be rendered yet.
+        setCardIndex(0); // Lie to the UI that we have nothing in our cards!
+        cardStack.forceUpdate(() => {
+            setCardIndex(data.length); // Now tell the truth, we have a new length of cards.
+        });
+    };
+
+    if (dataIsReturned === true && data !== undefined) {
+        return (
+            <View style={styles.container}>
+                <Swiper
+                    ref={(ref) => { cardStack = ref; }}
+                    cards={[...data]}
+                    key={cardIndex}
+                    renderCard={(item) => {
+                        return (
+                            <MovieList
                                 title={item.title}
                                 subtitle={item.description}
                                 image={item.profile_img}
                                 onPress={() => navigation.navigate("Info", item)}
                             />
-                        )}
-                    />
-            }
+                        )
+                    }}
+                    onSwiped={(cardIndex) => { getCardBack(cardIndex) }}
+                    cardIndex={cardIndex}
+                    onSwipedAll={onSwipedAll}
+                    backgroundColor={'#4FD0E9'}
+                    stackSize={4}
+                    showSecondCard={true}
+                    cardStyle={{ height: 520 }}
+                    cardVerticalMargin={5}
+                    cardHorizontalMargin={5}
+                    animateOverlayLabelsOpacity
+                    animateCardOpacity>
+                </Swiper>
+
+            </View>)
+    } else {
+        return (<Text>Loading</Text>)
+    }
 
 
-        </View>
-    );
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 20,
         flex: 1,
-        backgroundColor: "#f7f5f5",
-        padding: 10,
-        height: height,
-        width: width
+        backgroundColor: "#F5FCFF"
+    },
+    card: {
+        flex: 1,
+        borderRadius: 4,
+        borderWidth: 2,
+        borderColor: "#E8E8E8",
+        justifyContent: "center",
+        backgroundColor: "white"
     },
     text: {
-        fontSize: 20,
         textAlign: "center",
-        color: "#fc5c65",
-        marginBottom: 15,
-        fontWeight: "bold",
-    },
-    Indicatorcontainer: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    horizontal: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        padding: 10,
-    },
+        fontSize: 50,
+        backgroundColor: "transparent"
+    }
 });
-export default Home;
+export default TinderSwipe;

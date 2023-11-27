@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import Card from "../Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -91,7 +91,7 @@ const PresentSeason = ({ navigation }) => {
     return (
         <View style={[styles.container, { backgroundColor: theme.background }]}>
             {
-                isLoading === true ? <Text>Loading Data</Text> :
+                isLoading === true ?  <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     <FlatList
                         data={data}
                         renderItem={({ item }) => (

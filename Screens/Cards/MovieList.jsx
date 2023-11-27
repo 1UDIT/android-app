@@ -13,7 +13,7 @@ import {
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-const Card = ({ title, subtitle, image, onPress }) => {
+const MovieList = ({ title, subtitle, image, onPress }) => {
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -37,12 +37,13 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     overflow: "hidden",
     marginBottom: 20,
+    marginTop: 50,
     flexDirection: 'row',
   },
   image: {
     width: "50%",
     justifyContent: 'flex-start',
-    height: 200,
+    height: height/2,
   },
   detailsConatiner: {
     width: "50%",
@@ -59,4 +60,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-export default Card;
+export default MovieList;
