@@ -40,17 +40,7 @@ function SettingsScreen(props) {
   const { setTheme, theme } = React.useContext(ThemeContext);
   const colorScheme = Appearance.getColorScheme();
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
   // const toggleSwitch = () => setIsEnabled(() => setTheme(theme === 'Light' ? 'Dark' : 'Light'));
-  console.log(isEnabled, "isEnabled")
-
-  useEffect(() => {
-    get("Mode")
-      .then((data) => data)
-      .then((value) => setIsEnabled(value))
-      .catch((err) => console.log("AsyncStorageErr: " + err));
-  }, [theme])
-
   useEffect(() => {
     if (isEnabled === false) {
       setTheme('Light');
