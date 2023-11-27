@@ -23,7 +23,7 @@ const Home = ({ navigation }) => {
 
         if (isOnline) {
             // If there's internet connectivity, fetch and store new API data
-            axios.get(`https://app-api-u735.onrender.com/Scheduler`,
+            axios.get(`https://shiny-colt-overalls.cyclic.app/Scheduler`,
                 {
                     auth: {
                         username: 'AnimeGo',
