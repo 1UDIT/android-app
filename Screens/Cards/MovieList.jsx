@@ -25,33 +25,38 @@ const MovieList = ({ title, subtitle, image, onPress }) => {
         <View style={styles.detailsConatiner}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle} numberOfLines={2}>{subtitle}</Text>
-        </View>
-        
+        </View>        
       </View>
     </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "black",
     borderRadius: 25,
     overflow: "hidden",
     marginBottom: 20,
-    marginTop: 50,
-    flexDirection: 'row',
+    marginTop: 50, 
+    borderColor: 'white',
+    borderWidth: 5,
+    marginBottom: 30,
   },
   image: {
-    width: "50%",
+    backgroundColor: "#121211",
+    width: width,
     justifyContent: 'flex-start',
-    height: height/2,
+    height: undefined,
+    resizeMode:'contain',
+    aspectRatio: 1,
   },
   detailsConatiner: {
-    width: "50%",
+    width: "100%",
     padding: 10
   },
   subtitle: {
     fontSize: 15,
-    marginTop: 5,
+    marginTop: 2,
+    color: "white",
   },
   title: {
     fontSize: 18,

@@ -5,7 +5,7 @@ import { useTheme } from '@react-navigation/native';
 import MovieList from '../Cards/MovieList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import axios from 'axios'; 
+import axios from 'axios';
 
 const TinderSwipe = ({ navigation }) => {
     const [data, Setdata] = useState([]);
@@ -98,18 +98,8 @@ const TinderSwipe = ({ navigation }) => {
         // Handle swipes, e.g., remove the card from the array
         if (data !== undefined) {
             setCardIndex(index + 1);
-            console.log(index, 'cardIndex', cardIndex);
         };
     }
-
-    const renderCard = (card) => {
-        return (
-            <View style={styles.card} key={card._id} onPoress>
-                <Text style={styles.cardText}>{card.title}</Text>
-            </View>
-        );
-    };
-
     const onSwipedAll = () => {
         Setdata(data); // Update with the new cards that we want, but it won't be rendered yet.
         setCardIndex(0); // Lie to the UI that we have nothing in our cards!
@@ -120,7 +110,7 @@ const TinderSwipe = ({ navigation }) => {
 
     if (dataIsReturned === true && data !== undefined) {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, { backgroundColor: theme.background }]}>
                 <Swiper
                     ref={(ref) => { cardStack = ref; }}
                     cards={[...data]}
@@ -138,10 +128,10 @@ const TinderSwipe = ({ navigation }) => {
                     onSwiped={(cardIndex) => { getCardBack(cardIndex) }}
                     cardIndex={cardIndex}
                     onSwipedAll={onSwipedAll}
-                    backgroundColor={'#4FD0E9'}
+                    containerStyle={{ backgroundColor: '#141414' }}
                     stackSize={4}
                     showSecondCard={true}
-                    cardStyle={{ height: 520 }}
+                    cardStyle={{ height: 200 }}
                     cardVerticalMargin={5}
                     cardHorizontalMargin={5}
                     animateOverlayLabelsOpacity
@@ -159,15 +149,6 @@ const TinderSwipe = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F5FCFF"
-    },
-    card: {
-        flex: 1,
-        borderRadius: 4,
-        borderWidth: 2,
-        borderColor: "#E8E8E8",
-        justifyContent: "center",
-        backgroundColor: "white"
     },
     text: {
         textAlign: "center",
