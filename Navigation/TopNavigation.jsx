@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 const bottomTab = createBottomTabNavigator();
 
 export default function HomeScreen() {
-    const theme = useTheme();    
+    const theme = useTheme();
     return (
         <Tab.Navigator
             screenOptions={() => ({
@@ -35,7 +35,7 @@ export default function HomeScreen() {
                 name="News feed"
                 component={HomeView}
             />
-            <Tab.Screen name="Seasonal" component={Schedule} />
+            <Tab.Screen name="Seasonal" component={BottomNavigation} />
             <Tab.Screen name="Recommendation" component={RecommendationScreen} />
         </Tab.Navigator>
     );
@@ -90,7 +90,7 @@ function NewList() {
     );
 }
 
-function Schedule() {
+function BottomNavigation() {
     const theme = useTheme();
     return (
         <bottomTab.Navigator
