@@ -99,7 +99,7 @@ const NextSeason = ({ navigation }) => {
                                 title={item.title}
                                 subtitle={item.description}
                                 image={item.profile_img}
-                                onPress={() => navigation.navigate("Info", item)}
+                                onPress={() => navigation.navigate("List", item)}
                             />
                         )}
                     />

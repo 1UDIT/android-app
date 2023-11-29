@@ -3,16 +3,15 @@ import { useState, useEffect } from "react";
 import { CommonActions, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
 import { get, save, saveString } from './storage';
 import { DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/Ionicons';
-import ListingDetails from './Screens/NewsInfo';
+import Icon from 'react-native-vector-icons/Ionicons'; 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Appearance, Dimensions, Pressable, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
 import ScreenIndex from './Screens/MovieScreen/ScreenIndex';
 import { light, dark } from './colors';
-import HomeScreen from './Navigation/TopNavigation';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import HomeScreen from './Navigation/TopNavigation'; 
+import ListingDetails from './Screens/InfoCards/NewsInfo';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height  
 

@@ -1,7 +1,7 @@
 import { useTheme } from "@react-navigation/native";
 import RecommdatDetail from "../Screens/Cards/RecommdatDetail";
 import Home from "../Screens/Home";
-import ListingDetails from "../Screens/NewsInfo";
+import ListingDetails from "../Screens/InfoCards/NewsInfo";
 import RecommendationList from "../Screens/Recommendation";
 import NextSeason from "../Screens/Scheduler List/NextSeason";
 import PresentSeason from "../Screens/Scheduler List/PresentSeason";
@@ -9,6 +9,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AnimeList from "../Screens/InfoCards/AnimeList";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -57,6 +58,38 @@ function HomeView() {
     );
 }
 
+function PresentList() {
+    return (
+        <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+            initialRouteName="Home"
+        >
+            <Stack.Screen name="Home" component={PresentSeason} />
+            <Stack.Screen
+                options={{ presentation: "modal" }}
+                name="List"
+                component={AnimeList}
+            />
+        </Stack.Navigator>
+    );
+}
+
+function NewList() {
+    return (
+        <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+            initialRouteName="Home"
+        >
+            <Stack.Screen name="Home" component={NextSeason} />
+            <Stack.Screen
+                options={{ presentation: "modal" }}
+                name="List"
+                component={AnimeList}
+            />
+        </Stack.Navigator>
+    );
+}
+
 function Schedule() {
     const theme = useTheme();
     return (
@@ -77,7 +110,7 @@ function Schedule() {
         >
             <bottomTab.Screen
                 name="This Season"
-                component={PresentSeason}
+                component={PresentList}
                 options={{
                     tabBarLabel: 'This Season',
                     tabBarIcon: ({ color, size }) => (
@@ -86,7 +119,7 @@ function Schedule() {
                 }} />
             <bottomTab.Screen
                 name="Next"
-                component={NextSeason}
+                component={NewList}
                 options={{
                     tabBarLabel: 'Next Season',
                     tabBarIcon: ({ color, size }) => (

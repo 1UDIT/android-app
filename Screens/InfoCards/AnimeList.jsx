@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from "react-native";
-import Icon from "../Components/Icon";
+import Icon from "../../Components/Icon";
 import Icons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -19,7 +19,7 @@ var height = Dimensions.get('window').height; //full height
 
 
 
-const ListingDetails = ({ route, navigation }) => {
+const AnimeList = ({ route, navigation }) => {
   const theme = useTheme();
 
   const onShare = async (title) => {
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
 });
-export default ListingDetails;
+export default AnimeList;
