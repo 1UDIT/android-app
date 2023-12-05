@@ -1,12 +1,12 @@
-import {useTheme } from "@react-navigation/native";
-import React from "react"; 
+import { useTheme } from "@react-navigation/native";
+import React from "react";
 import {
   View,
   StyleSheet,
   Image,
   Text,
   TouchableWithoutFeedback,
-  Dimensions, 
+  Dimensions,
 } from "react-native";
 
 
@@ -26,7 +26,7 @@ const Card = ({ title, subtitle, image, onPress }) => {
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle} numberOfLines={2}>{subtitle}</Text>
         </View>
-        
+
       </View>
     </TouchableWithoutFeedback>
   );

@@ -34,7 +34,7 @@ const RecommdatDetail = () => (
                 data={data}
                 keyExtractor={(item) => item.id}
                 numColumns={1}
-                horizontal={false} 
+                horizontal={false}
                 renderItem={({ item }) => (
                     <MovieCard
                         title={item.title}
@@ -48,7 +48,7 @@ const RecommdatDetail = () => (
                 data={data}
                 keyExtractor={(item) => item.id}
                 numColumns={2}
-                horizontal={false} 
+                horizontal={false}
                 renderItem={({ item }) => (
                     <MovieCard
                         title={item.title}
@@ -62,18 +62,18 @@ const RecommdatDetail = () => (
 );
 
 const styles = StyleSheet.create({
-    container: { 
-        flex:1,
+    container: {
+        flex: 1,
         backgroundColor: 'lightgray',
-        flexDirection:"row",
+        flexDirection: "row",
     },
     cardContainer: {
-        flex:2,
+        flex: 2,
         backgroundColor: 'white',
         borderRadius: 8,
         margin: 10,
         padding: 20,
-        alignItems: 'center', 
+        alignItems: 'center',
     },
     poster: {
         width: 200,

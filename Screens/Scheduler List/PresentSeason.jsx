@@ -137,8 +137,7 @@ const PresentSeason = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     flatList: {
-        height: 'auto',
-        backgroundColor: 'red',
+        height: 'auto', 
         flexGrow: 0
     },
     container: {

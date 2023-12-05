@@ -20,7 +20,7 @@ const RecommendationList = ({ navigation }) => {
                     data={genres}
                     keyExtractor={(item) => item.id}
                     numColumns={1}
-                    renderItem={({ item }) => <MovieCard genre={item.genre} iconName={item.iconName} navigation={navigation}/>}
+                    renderItem={({ item }) => <MovieCard genre={item.genre} iconName={item.iconName} navigation={navigation} />}
                 />
                 :
                 <FlatList
@@ -28,7 +28,7 @@ const RecommendationList = ({ navigation }) => {
                     keyExtractor={(item) => item.id}
                     numColumns={2}
                     horizontal={false}
-                    renderItem={({ item }) => <MovieCard genre={item.genre} iconName={item.iconName} navigation={navigation}/>}
+                    renderItem={({ item }) => <MovieCard genre={item.genre} iconName={item.iconName} navigation={navigation} />}
                 />
             }
         </View>

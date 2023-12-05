@@ -5,7 +5,7 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 
-const MovieCard = ({ genre, iconName,navigation }) => {
+const MovieCard = ({ genre, iconName, navigation }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("RecommendationDetails", genre)}>
       <Icon name={iconName} size={30} color="black" />
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     flexDirection: 'row', // Align icon and text horizontally 
-    width:width/2.3,
-    height:120
+    width: width / 2.3,
+    height: 120
   },
   genreText: {
     fontSize: 16,

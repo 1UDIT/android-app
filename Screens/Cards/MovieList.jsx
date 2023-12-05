@@ -1,12 +1,12 @@
-import {useTheme } from "@react-navigation/native";
-import React from "react"; 
+import { useTheme } from "@react-navigation/native";
+import React from "react";
 import {
   View,
   StyleSheet,
   Image,
   Text,
   TouchableWithoutFeedback,
-  Dimensions, 
+  Dimensions,
 } from "react-native";
 
 
@@ -25,7 +25,7 @@ const MovieList = ({ title, subtitle, image, onPress }) => {
         <View style={styles.detailsConatiner}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle} numberOfLines={2}>{subtitle}</Text>
-        </View>        
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     overflow: "hidden",
     marginBottom: 20,
-    marginTop: 50, 
+    marginTop: 50,
     borderColor: 'white',
     borderWidth: 5,
     marginBottom: 30,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     width: width,
     justifyContent: 'flex-start',
     height: undefined,
-    resizeMode:'contain',
+    resizeMode: 'contain',
     aspectRatio: 1,
   },
   detailsConatiner: {

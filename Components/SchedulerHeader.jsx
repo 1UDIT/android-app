@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ScrollView, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Replace with the appropriate icon library 
 import { Dropdown } from 'react-native-element-dropdown';
 import { useState } from 'react';
@@ -21,22 +21,23 @@ const SchedulerHeader = ({ Season, day }) => {
                 <View style={styles.containerView}>
                     <View style={styles.dropdowncontainer}>
                         <Dropdown
-                            style={[styles.dropdown, isFocus  ]}
+                            style={[styles.dropdown, isFocus, { alignItems: 'center' }]}
                             placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle} 
+                            selectedTextStyle={styles.selectedTextStyle}
                             iconStyle={styles.iconStyle}
                             data={day}
                             maxHeight={300}
                             labelField="label"
                             valueField="value"
-                            placeholder={!isFocus ? '' : '...'}
+                            placeholder={!isFocus ? 'Filter By Date' : '...'}
                             searchPlaceholder="Search..."
                             value={value}
                             onChange={item => {
                                 setValue(item.value);
                                 setIsFocus(false);
                             }}
-                            renderLeftIcon={() => (<Ionicons name='filter-outline'  color={'white'} size={25} />)}
+                            renderLeftIcon={() => (null)}
+                            renderRightIcon={() => (<Ionicons name='filter-outline' color={'black'} size={25} />)}
                         />
                     </View>
 
@@ -48,7 +49,6 @@ const SchedulerHeader = ({ Season, day }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'red',
         width: width,
         height: 50
     },
@@ -64,8 +64,7 @@ const styles = StyleSheet.create({
         fontSize: 26,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'green',
-        flex:2,
+        flex: 2,
         height: 50
     },
     spacer: {
@@ -75,22 +74,21 @@ const styles = StyleSheet.create({
     containerView: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'green',
         flex: 2,
         height: 50
     },
     dropdowncontainer: {
-        width: '100%', 
+        width: '100%',
     },
     dropdown: {
-        height: 50, 
+        height: 50,
         borderWidth: 0,
         borderRadius: 8,
-        paddingHorizontal: 8,       
+        paddingHorizontal: 8,
     },
     icon: {
         marginRight: 5,
-        color:'white',
+        color: 'black',
     },
     label: {
         position: 'absolute',
@@ -102,7 +100,9 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     placeholderStyle: {
-        fontSize: 16,
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: 'red',
     },
     selectedTextStyle: {
         fontSize: 16,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     iconStyle: {
         width: 20,
         height: 20,
-    }, 
+    },
 });
 
 export default SchedulerHeader;

@@ -25,7 +25,7 @@ const ListingDetails = ({ route, navigation }) => {
   const onShare = async (title) => {
     Linking.openURL(`whatsapp://send?text=Check Out News About:\n${title} https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en', 
     url: 'https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en`)
-  }; 
+  };
   return (
     <>
       <View style={[styles.container, { backgroundColor: theme.background }]}>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     height: 50,
-    backgroundColor: "red", 
+    backgroundColor: "red",
   },
   image: {
     backgroundColor: "#121211",
@@ -80,10 +80,10 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   searchIcon: {
-    width: width, 
+    width: width,
     alignItems: "center",
-    justifyContent: "center", 
-    flex: 1, 
+    justifyContent: "center",
+    flex: 1,
   },
   detailsContainer: { padding: 20 },
   iconContainer: {
