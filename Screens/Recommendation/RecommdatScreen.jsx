@@ -27,7 +27,7 @@ const MovieCard = ({ title, posterUri, description }) => (
     </View>
 );
 
-const RecommdatDetail = () => (
+const RecommdatScreen = () => (
     <View style={styles.container}>
         {data.length == 2 ?
             <FlatList
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RecommdatDetail;
+export default RecommdatScreen;

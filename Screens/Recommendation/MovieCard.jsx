@@ -7,7 +7,7 @@ var height = Dimensions.get('window').height; //full height
 
 const MovieCard = ({ genre, iconName, navigation }) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("RecommendationDetails", genre)}>
+    <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("RecommdatScreen", genre)}>
       <Icon name={iconName} size={30} color="black" />
       <Text style={styles.genreText}>{genre}</Text>
     </TouchableOpacity>

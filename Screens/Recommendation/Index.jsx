@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import MovieCard from '../Components/MovieCard';
+import MovieCard from './MovieCard';
 import { useTheme } from '@react-navigation/native';
 
 const genres = [
@@ -11,7 +11,7 @@ const genres = [
     // Add more genres and corresponding icons
 ];
 
-const RecommendationList = ({ navigation }) => {
+const RecommendationIndex = ({ navigation }) => {
     const theme = useTheme();
     return (
         <View style={[styles.container, { backgroundColor: theme.background }]}>
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RecommendationList;
+export default RecommendationIndex;

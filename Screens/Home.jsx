@@ -21,43 +21,32 @@ const Home = ({ navigation }) => {
         // Check internet connection
         // You can use NetInfo here, as shown in the previous response. 
 
-        if (isOnline) {
-            // If there's internet connectivity, fetch and store new API data
-            axios.get(`https://app-api-u735.onrender.com/Scheduler`,
-                {
-                    auth: {
-                        username: 'AnimeGo',
-                        password: 'AnimeRock'
-                    },
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                })
-                .then(response => {
-                    setisLoading(false);
-                    Setdata(response.data);
-                    AsyncStorage.setItem('apiData', JSON.stringify(response.data));
-                }).catch(error => {
-                    console.log(error);
-                });
-        } else {
-            // If there's no internet, try to retrieve old data from AsyncStorage 
-            try {
-                const value = await AsyncStorage.getItem('apiData');
-                if (value !== null) {
-                    //    console.log(value,"AsyncStorage");                
-                    Setdata(value);
-                }
-            } catch (e) {
-                console.error('Error retrieving data:', error)
-            }
-        }
+        // If there's internet connectivity, fetch and store new API data
+        axios.get(`https://app-api-u735.onrender.com/News`,
+            {
+                auth: {
+                    username: 'AnimeGo',
+                    password: 'AnimeRock'
+                },
+                headers: {
+                    'content-type': 'application/json',
+                },
+            })
+            .then(response => {
+                setisLoading(false);
+                Setdata(response.data);
+                AsyncStorage.setItem('apiData', JSON.stringify(response.data));
+            }).catch(error => {
+                console.log(error);
+            });
     }
 
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('apiData');
             if (value !== null) {
+                console.log(value, "AsyncStorage");
+                setisLoading(false);
                 Setdata(value);
             }
         } catch (e) {
@@ -65,29 +54,32 @@ const Home = ({ navigation }) => {
         }
     };
 
+
     useEffect(() => {
         // Check internet connection
-        const unsubscribe = NetInfo.addEventListener(state => {
+        const unsubscribe = NetInfo.addEventListener(state => { 
             setIsOnline(state.isConnected);
         });
-
-        // Simulate fetching data from API
-        if (isOnline) {
-            getResult();
-        }
-
-        if (isLoading === true) {
-            getData();
-        }
-
         // Cleanup
         return () => {
             unsubscribe();
         };
+    }, [isOnline]); 
+
+    useEffect(() => {
+        // console.log('isOnline', isOnline, data);
+        // Simulate fetching data from API
+        if (isOnline) {
+            getResult();
+        } else {
+            getData();
+        }
+
+
     }, [isOnline]);
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <View style={[styles.container, { backgroundColor: theme.background }]}><Text>{ isOnline===true?'online':'offline'}</Text>
             {
                 isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     <FlatList
@@ -102,7 +94,6 @@ const Home = ({ navigation }) => {
                         )}
                     />
             }
-
 
         </View>
     );

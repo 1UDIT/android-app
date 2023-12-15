@@ -13,20 +13,21 @@ var height = Dimensions.get('window').height; //full height
 
 
 const PresentSeason = ({ navigation }) => {
-    const [day,setday] = useState( [
-        { label: 'Item 1', value: '1' },
-        { label: 'Item 2', value: '2' },
-        { label: 'Item 3', value: '3' },
-        { label: 'Item 4', value: '4' },
-        { label: 'Item 5', value: '5' },
-        { label: 'Item 6', value: '6' },
-        { label: 'Item 7', value: '7' },
-        { label: 'Item 8', value: '8' },
-      ]);
+    const [day, setday] = useState([
+        { label: 'All', value: '8' }, 
+        { label: 'Monday', value: '1' },
+        { label: 'Tuesday', value: '2' },
+        { label: 'Wednesday', value: '3' },
+        { label: 'Thursday', value: '4' },
+        { label: 'Friday', value: '5' },
+        { label: 'Saturday', value: '6' },
+        { label: 'Sunday', value: '7' }, 
+    ]);
     const theme = useTheme();
     const [data, Setdata] = useState();
     const [isOnline, setIsOnline] = useState(true);
     const [isLoading, setisLoading] = useState(true);
+    const [value, setValue] = useState('All');
 
     const getResult = async () => {
         // Check internet connection
@@ -34,7 +35,7 @@ const PresentSeason = ({ navigation }) => {
 
         if (isOnline) {
             // If there's internet connectivity, fetch and store new API data
-            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?Season=Summer`,
+            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?SeasonType=Prev`,
                 {
                     auth: {
                         username: 'AnimeGo',
@@ -111,6 +112,8 @@ const PresentSeason = ({ navigation }) => {
                             <SchedulerHeader
                                 Season={item.Season}
                                 day={day}
+                                setValue={setValue}
+                                value={value}
                             />
                         )}
                     />

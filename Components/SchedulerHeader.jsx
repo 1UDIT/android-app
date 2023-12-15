@@ -8,15 +8,13 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 
-const SchedulerHeader = ({ Season, day }) => {
-    const [value, setValue] = useState(null);
+const SchedulerHeader = ({ Season, day, value, setValue }) => {
+
     const [isFocus, setIsFocus] = useState(false);
-
-
     return (
         <View style={styles.container}>
             <ScrollView stickyHeaderIndices={1} contentContainerStyle={{ flexDirection: 'row' }}>
-                <View style={styles.overline}><Text>1</Text></View>
+                <View style={styles.overline}><Text>Scheduler List</Text></View>
                 <View style={styles.header}><Text>{Season} Season</Text></View>
                 <View style={styles.containerView}>
                     <View style={styles.dropdowncontainer}>
@@ -29,11 +27,11 @@ const SchedulerHeader = ({ Season, day }) => {
                             maxHeight={300}
                             labelField="label"
                             valueField="value"
-                            placeholder={!isFocus ? 'Filter By Date' : '...'}
+                            placeholder={!isFocus ? 'Filter By Day' : '...'}
                             searchPlaceholder="Search..."
-                            value={value}
+                            value={value === undefined ? value : value.label}
                             onChange={item => {
-                                setValue(item.value);
+                                setValue(item.label);
                                 setIsFocus(false);
                             }}
                             renderLeftIcon={() => (null)}

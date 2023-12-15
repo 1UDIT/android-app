@@ -1,8 +1,6 @@
-import { useTheme } from "@react-navigation/native";
-import RecommdatDetail from "../Screens/Cards/RecommdatDetail";
+import { useTheme } from "@react-navigation/native"; 
 import Home from "../Screens/Home";
-import ListingDetails from "../Screens/InfoCards/NewsInfo";
-import RecommendationList from "../Screens/Recommendation";
+import ListingDetails from "../Screens/InfoCards/NewsInfo"; 
 import NextSeason from "../Screens/Scheduler List/NextSeason";
 import PresentSeason from "../Screens/Scheduler List/PresentSeason";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -10,6 +8,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AnimeList from "../Screens/InfoCards/AnimeList";
+import RecommdatScreen from "../Screens/Recommendation/RecommdatScreen";
+import RecommendationIndex from "../Screens/Recommendation/Index";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -136,11 +136,11 @@ function RecommendationScreen() {
             screenOptions={{ headerShown: false }}
             initialRouteName="Home"
         >
-            <Stack.Screen name="Home" component={RecommendationList} />
+            <Stack.Screen name="Home" component={RecommendationIndex} />
             <Stack.Screen
                 options={{ presentation: "modal" }}
-                name="RecommendationDetails"
-                component={RecommdatDetail}
+                name="RecommdatScreen"
+                component={RecommdatScreen}
             />
         </Stack.Navigator>
     );
