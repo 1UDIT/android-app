@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const TinderSwipe = ({ navigation }) => {
     const [data, Setdata] = useState([]);
-    const [isOnline, setIsOnline] = useState(true);
+    const [isOnline, setIsOnline] = useState(null);
     const [isLoading, setisLoading] = useState(true);
     const [dataIsReturned, setDataIsReturned] = useState(false)
     const [cardIndex, setCardIndex] = useState(0);
@@ -34,17 +34,17 @@ const TinderSwipe = ({ navigation }) => {
                 .then(response => {
                     setisLoading(false);
                     Setdata(response.data);
-                    AsyncStorage.setItem('apiData', JSON.stringify(response.data));
+                    AsyncStorage.setItem('Scheduler', JSON.stringify(response.data));
                 }).catch(error => {
                     console.log(error);
                 });
         } else {
             // If there's no internet, try to retrieve old data from AsyncStorage 
             try {
-                const value = await AsyncStorage.getItem('apiData');
+                const value = await AsyncStorage.getItem('Scheduler');
                 if (value !== null) {
-                    //    console.log(value,"AsyncStorage");                
-                    Setdata(value);
+                    Setdata(JSON.parse(value)); 
+                    setisLoading(false);
                 }
             } catch (e) {
                 console.error('Error retrieving data:', error)
@@ -62,6 +62,7 @@ const TinderSwipe = ({ navigation }) => {
             console.error('Error retrieving data:', error)
         }
     };
+    
 
     useEffect(() => {
         // Check internet connection

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, FlatList, RefreshControl, StyleSheet, ToastAndroid, View } from "react-native";
 import Card from "../Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 import { useTheme } from "@react-navigation/native";
 import SchedulerHeader from "../../Components/SchedulerHeader";
 
@@ -20,13 +20,15 @@ const NextSeason = ({ navigation }) => {
         { label: 'Thursday', value: '4' },
         { label: 'Friday', value: '5' },
         { label: 'Saturday', value: '6' },
-        { label: 'Sunday', value: '7' }, 
+        { label: 'Sunday', value: '7' },
     ]);
     const theme = useTheme();
     const [data, Setdata] = useState();
-    const [isOnline, setIsOnline] = useState(true);
+    const [isOnline, setIsOnline] = useState(null);
     const [isLoading, setisLoading] = useState(true);
     const [value, setValue] = useState('All');
+    const [refreshing, setRefreshing] = useState(false);
+    const { type, isConnected } = useNetInfo();
 
     const getResult = async () => {
         // Check internet connection
@@ -47,17 +49,17 @@ const NextSeason = ({ navigation }) => {
                 .then(response => {
                     setisLoading(false);
                     Setdata(response.data);
-                    AsyncStorage.setItem('apiData', JSON.stringify(response.data));
+                    AsyncStorage.setItem('Next', JSON.stringify(response.data));
                 }).catch(error => {
                     console.log(error);
                 });
         } else {
             // If there's no internet, try to retrieve old data from AsyncStorage 
             try {
-                const value = await AsyncStorage.getItem('apiData');
+                const value = await AsyncStorage.getItem('Next');
                 if (value !== null) {
                     //    console.log(value,"AsyncStorage");                
-                    Setdata(value);
+                    Setdata(JSON.parse(value));
                 }
             } catch (e) {
                 console.error('Error retrieving data:', error)
@@ -65,12 +67,42 @@ const NextSeason = ({ navigation }) => {
         }
     }
 
+    const onRefresh = async () => {
+
+        if (data?.length > 2) {
+            setRefreshing(true)
+            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?SeasonType=Next`,
+                {
+                    auth: {
+                        username: 'AnimeGo',
+                        password: 'AnimeRock'
+                    },
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                })
+                .then(response => {
+                    setisLoading(false);
+                    setRefreshing(false)
+                    Setdata(response.data);
+                    AsyncStorage.setItem('News', JSON.stringify(response.data));
+                    ToastAndroid.show('Data Update', ToastAndroid.SHORT);
+                }).catch(error => {
+                    console.log(error);
+                });
+        }
+        else {
+            ToastAndroid.show('No more new data available', ToastAndroid.SHORT);
+            setRefreshing(false)
+        }
+    }
+
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('apiData');
             if (value !== null) {
-                //    console.log(value,"AsyncStorage");                
-                Setdata(value);
+                Setdata(JSON.parse(value));
+                setisLoading(false);
             }
         } catch (e) {
             console.error('Error retrieving data:', error)
@@ -82,29 +114,29 @@ const NextSeason = ({ navigation }) => {
         const unsubscribe = NetInfo.addEventListener(state => {
             setIsOnline(state.isConnected);
         });
-
-        // Simulate fetching data from API
-        if (isOnline) {
-            getResult();
-        }
-
-        if (isLoading === true) {
-            getData();
-        }
-
         // Cleanup
         return () => {
             unsubscribe();
         };
+    }, []);
+
+    useEffect(() => {
+        // Simulate fetching data from API
+        if (isConnected === true) {
+            getResult();
+        } else if (isConnected === false) {
+            // console.log(JSON.parse(data));
+            getData();
+        }
     }, [isOnline]);
- 
+
 
     return (
         <>
             {
                 isLoading === true ? [] :
                     <FlatList
-                        data={data.slice(0, 1)}
+                        data={data?.slice(0, 1)}
                         maxToRenderPerBatch={1}
                         style={styles.flatList}
                         renderItem={({ item }) => (
@@ -121,6 +153,7 @@ const NextSeason = ({ navigation }) => {
                 {
                     isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                         <FlatList
+                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                             data={data}
                             renderItem={({ item }) => (
                                 <Card
