@@ -155,6 +155,9 @@ const NextSeason = ({ navigation }) => {
                         <FlatList
                             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                             data={data}
+                            numColumns={2}
+                            horizontal={false}
+                            keyExtractor={(item) => item.id}
                             renderItem={({ item }) => (
                                 <Card
                                     title={item.title}

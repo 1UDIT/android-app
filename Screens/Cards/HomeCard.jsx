@@ -13,7 +13,7 @@ import {
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-const Card = ({ title, subtitle, image, onPress }) => {
+const Homecard = ({ title, subtitle, image, onPress }) => {
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -33,14 +33,11 @@ const Card = ({ title, subtitle, image, onPress }) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    margin: 10,
-    padding: 20,
-    alignItems: 'center',
-    flexDirection: 'row', // Align icon and text horizontally 
-    width: width / 2.3,
-    height: 120
+    backgroundColor: "white",
+    borderRadius: 25,
+    overflow: "hidden",
+    marginBottom: 20,
+    flexDirection: 'row',
   },
   image: {
     width: "50%",
@@ -62,4 +59,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-export default Card;
+export default Homecard;

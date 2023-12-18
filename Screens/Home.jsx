@@ -5,6 +5,7 @@ import Card from "./Cards/card";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 import { useTheme } from "@react-navigation/native";
+import Homecard from "./Cards/HomeCard";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -117,7 +118,7 @@ const Home = ({ navigation }) => {
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                         data={data}
                         renderItem={({ item }) => (
-                            <Card
+                            <Homecard
                                 title={item.title}
                                 subtitle={item.description}
                                 image={item.profile_img}
