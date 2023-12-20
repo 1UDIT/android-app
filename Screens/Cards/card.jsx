@@ -13,7 +13,7 @@ import {
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-const Card = ({ title, subtitle, image, onPress }) => {
+const Card = ({ title,  image, onPress }) => {
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -24,7 +24,6 @@ const Card = ({ title, subtitle, image, onPress }) => {
         />
         <View style={styles.detailsConatiner}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle} numberOfLines={2}>{subtitle}</Text>
         </View>
 
       </View>
@@ -38,21 +37,24 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 20,
     alignItems: 'center',
-    flexDirection: 'row', // Align icon and text horizontally 
     width: width / 2.3,
-    height: 120
+    height: 300
   },
   image: {
-    width: "50%",
+    backgroundColor: "#121211",
+    width: width / 2.3,
     justifyContent: 'flex-start',
-    height: 200,
+    height: undefined,
+    resizeMode: 'contain',
+    aspectRatio: 1,
   },
   detailsConatiner: {
-    width: "50%",
+    width: "100%",
+    height: 200,
     padding: 10
   },
   subtitle: {
-    fontSize: 15,
+    fontSize: 13,
     marginTop: 5,
   },
   title: {

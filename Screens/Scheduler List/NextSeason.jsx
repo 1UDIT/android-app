@@ -160,8 +160,7 @@ const NextSeason = ({ navigation }) => {
                             keyExtractor={(item) => item.id}
                             renderItem={({ item }) => (
                                 <Card
-                                    title={item.title}
-                                    subtitle={item.description}
+                                    title={item.title} 
                                     image={item.profile_img}
                                     onPress={() => navigation.navigate("List", item)}
                                 />
