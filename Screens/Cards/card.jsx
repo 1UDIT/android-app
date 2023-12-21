@@ -13,7 +13,7 @@ import {
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-const Card = ({ title,  image, onPress }) => {
+const Card = ({ title, date, image, onPress }) => {
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -24,6 +24,7 @@ const Card = ({ title,  image, onPress }) => {
         />
         <View style={styles.detailsConatiner}>
           <Text style={styles.title}>{title}</Text>
+          <Text style={styles.dateTitle}>{date}</Text>
         </View>
 
       </View>
@@ -35,10 +36,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     margin: 10,
-    padding: 20,
+    padding: 15,
     alignItems: 'center',
     width: width / 2.3,
-    height: 300
+    height: 330
   },
   image: {
     backgroundColor: "#121211",
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   },
   detailsConatiner: {
     width: "100%",
-    height: 200,
+    height: 140,
     padding: 10
   },
   subtitle: {
@@ -61,6 +62,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#FF595A",
     marginBottom: 7,
+    fontWeight: "bold",
+  },
+  dateTitle: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
     fontWeight: "bold",
   },
 });

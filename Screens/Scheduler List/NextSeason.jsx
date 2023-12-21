@@ -14,13 +14,14 @@ var height = Dimensions.get('window').height; //full height
 
 const NextSeason = ({ navigation }) => {
     const [day, setday] = useState([
-        { label: 'Monday', value: '1' },
-        { label: 'Tuesday', value: '2' },
-        { label: 'Wednesday', value: '3' },
-        { label: 'Thursday', value: '4' },
-        { label: 'Friday', value: '5' },
-        { label: 'Saturday', value: '6' },
-        { label: 'Sunday', value: '7' },
+        { label: 'All', value: '1' },
+        { label: 'Monday', value: '2' },
+        { label: 'Tuesday', value: '3' },
+        { label: 'Wednesday', value: '4' },
+        { label: 'Thursday', value: '5' },
+        { label: 'Friday', value: '6' },
+        { label: 'Saturday', value: '7' },
+        { label: 'Sunday', value: '8' },
     ]);
     const theme = useTheme();
     const [data, Setdata] = useState();
@@ -28,7 +29,7 @@ const NextSeason = ({ navigation }) => {
     const [isLoading, setisLoading] = useState(true);
     const [value, setValue] = useState('All');
     const [refreshing, setRefreshing] = useState(false);
-    const { type, isConnected } = useNetInfo();
+    const { type, isConnected } = useNetInfo(); 
 
     const getResult = async () => {
         // Check internet connection
@@ -128,7 +129,7 @@ const NextSeason = ({ navigation }) => {
             // console.log(JSON.parse(data));
             getData();
         }
-    }, [isOnline]);
+    }, [isOnline]); 
 
 
     return (
@@ -154,14 +155,15 @@ const NextSeason = ({ navigation }) => {
                     isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                         <FlatList
                             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                            data={data}
+                            data={value === 'All' ? data : data.filter((x) => x.day === value)}
                             numColumns={2}
                             horizontal={false}
                             keyExtractor={(item) => item.id}
                             renderItem={({ item }) => (
                                 <Card
-                                    title={item.title} 
+                                    title={item.title}
                                     image={item.profile_img}
+                                    date={item.date}
                                     onPress={() => navigation.navigate("List", item)}
                                 />
                             )}

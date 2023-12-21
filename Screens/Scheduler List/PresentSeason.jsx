@@ -14,14 +14,14 @@ var height = Dimensions.get('window').height; //full height
 
 const PresentSeason = ({ navigation }) => {
     const [day, setday] = useState([
-        { label: 'All', value: '8' },
-        { label: 'Monday', value: '1' },
-        { label: 'Tuesday', value: '2' },
-        { label: 'Wednesday', value: '3' },
-        { label: 'Thursday', value: '4' },
-        { label: 'Friday', value: '5' },
-        { label: 'Saturday', value: '6' },
-        { label: 'Sunday', value: '7' },
+        { label: 'All', value: '1' },
+        { label: 'Monday', value: '2' },
+        { label: 'Tuesday', value: '3' },
+        { label: 'Wednesday', value: '4' },
+        { label: 'Thursday', value: '5' },
+        { label: 'Friday', value: '6' },
+        { label: 'Saturday', value: '7' },
+        { label: 'Sunday', value: '8' },
     ]);
     const theme = useTheme();
     const [data, Setdata] = useState();
@@ -155,7 +155,7 @@ const PresentSeason = ({ navigation }) => {
                     isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                         <FlatList
                             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                            data={data}
+                            data={value === 'All'?data: data.filter((x) => x.day === value)}
                             renderItem={({ item }) => (
                                 <Card
                                     title={item.title}

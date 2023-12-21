@@ -4,31 +4,30 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Replace 
 import { Dropdown } from 'react-native-element-dropdown';
 import { useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useTheme } from "@react-navigation/native";
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-
 const SchedulerHeader = ({ Season, day, value, setValue }) => {
-
-    const [isFocus, setIsFocus] = useState(false);
+    const theme = useTheme();
+    const [isFocus, setIsFocus] = useState(false); 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.headerStyle  }]}>
             <ScrollView stickyHeaderIndices={1} contentContainerStyle={{ flexDirection: 'row' }}>
-                <View style={styles.overline}><Text>Scheduler List</Text></View>
-                <View style={styles.header}><Text>{Season} Season</Text></View>
+                <View style={styles.overline}><Text style={{color:theme.colors.text }}>Scheduler List</Text></View>
+                <View style={styles.header}><Text style={{color:theme.colors.text }}>{Season} Season</Text></View>
                 <View style={styles.containerView}>
                     <View style={styles.dropdowncontainer}>
                         <Dropdown
                             style={[styles.dropdown, isFocus, { alignItems: 'center' }]}
-                            placeholderStyle={styles.placeholderStyle}
+                            placeholderStyle={[styles.placeholderStyle,{color:theme.colors.text }]}
                             selectedTextStyle={styles.selectedTextStyle}
                             iconStyle={styles.iconStyle}
                             data={day}
                             maxHeight={300}
                             labelField="label"
                             valueField="value"
-                            placeholder={!isFocus ? 'Filter By Day' : '...'}
-                            searchPlaceholder="Search..."
+                            placeholder={!isFocus ? 'Filter By Day' : '...'} 
                             value={value === undefined ? value : value.label}
                             onChange={item => {
                                 setValue(item.label);
@@ -47,6 +46,7 @@ const SchedulerHeader = ({ Season, day, value, setValue }) => {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor:'red',
         width: width,
         height: 50
     },
@@ -99,8 +99,7 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 14,
-        fontWeight: 'bold',
-        color: 'red',
+        fontWeight: 'bold', 
     },
     selectedTextStyle: {
         fontSize: 16,
