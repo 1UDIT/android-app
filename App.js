@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { CommonActions, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
 import { get, save, saveString } from './storage';
 import { DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/Ionicons'; 
+import Icon from 'react-native-vector-icons/Ionicons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Appearance, Dimensions, Pressable, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import 'react-native-gesture-handler';
 import SearchBar from './Components/SearchBar';
 import ScreenIndex from './Screens/MovieScreen/ScreenIndex';
 import { light, dark } from './colors';
-import HomeScreen from './Navigation/TopNavigation'; 
+import HomeScreen from './Navigation/TopNavigation';
 import ListingDetails from './Screens/InfoCards/NewsInfo';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height  
@@ -34,7 +34,7 @@ function MovieScreen() {
   );
 }
 
-function SettingsScreen(props) {
+function DarkToggle(props) {
   const [isEnabled, setIsEnabled] = useState(false);
   const { setTheme, theme } = React.useContext(ThemeContext);
   const colorScheme = Appearance.getColorScheme();
@@ -123,6 +123,7 @@ export default function App() {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [theme, setTheme] = useState('Light');
+ 
 
   const themeData = { theme, setTheme };
   return (
@@ -132,29 +133,23 @@ export default function App() {
           screenOptions={({ navigation }) => ({
             drawerActiveTintColor: theme === 'Light' ? light.colors.Activetext : dark.colors.Activetext,
             drawerInactiveTintColor: theme === 'Light' ? light.colors.InActivetext : dark.colors.InActivetext,
-            headerRight: (props) => (
-              <View style={styles.IconBtncontainer}>
-                {
-                  showSearchBar === false ? <Icon name='search' onPress={() => setShowSearchBar(!showSearchBar)} size={30} />
-                    :
-                    <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsSearchBar} setShowSearchBar={setShowSearchBar}
-                      showSearchBar={showSearchBar} />
-                }
-              </View>
-            ),
-            headerLeft: (props) => (
-              <Pressable
-                android_ripple={{
-                  color: '#666666',
-                  foreground: true,
-                  borderless: true,
-                }}
-                onPress={() => { navigation.openDrawer() }}>
-                <View style={styles.detailsConatiner}>
-                  <Icon name='list-sharp' onPress={navigation.toggleDrawer} size={30} />
-                </View>
-              </Pressable>
-            ),
+            // headerRight: (props) => (
+            //   <View style={styles.IconBtncontainer}>
+            //     {
+            //       showSearchBar === false ? <Icon name='search' onPress={() => setShowSearchBar(!showSearchBar)} size={30} />
+            //         :
+            //         <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsSearchBar} setShowSearchBar={setShowSearchBar}
+            //           showSearchBar={showSearchBar} />
+            //     }
+            //   </View>
+            // ),
+            // headerLeft: (props) => (
+            //   <Pressable android_ripple={{ color: '#666666', foreground: true, borderless: true, }} onPress={() => { navigation.openDrawer() }}>
+            //     <View style={styles.detailsConatiner}>
+            //       <Icon name='list-sharp' onPress={navigation.toggleDrawer} size={30} />
+            //     </View>
+            //   </Pressable>
+            // ),
             drawerStyle: {
               backgroundColor: theme === 'Light' ? light.colors.headerStyle : dark.colors.headerStyle,
               width: 240,
@@ -165,13 +160,11 @@ export default function App() {
             },
           })}
           initialRouteName="Feed"
-          drawerContent={(props) => <SettingsScreen {...props} />}
+          drawerContent={(props) => <DarkToggle {...props} />}
         >
           <Drawer.Screen name="Feed" component={HomeScreen} />
           <Drawer.Screen name="Movie" component={MovieScreen} />
-          <Drawer.Screen name="Settings" component={SettingsScreen} options={{
-            drawerLabel: () => null,
-          }} />
+          <Drawer.Screen name="Settings" component={DarkToggle} options={{ drawerLabel: () => null, }} />
         </Drawer.Navigator >
       </NavigationContainer >
     </ThemeContext.Provider>

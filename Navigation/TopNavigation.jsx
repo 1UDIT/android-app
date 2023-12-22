@@ -1,6 +1,6 @@
-import { useTheme } from "@react-navigation/native"; 
+import { useTheme } from "@react-navigation/native";
 import Home from "../Screens/Home";
-import ListingDetails from "../Screens/InfoCards/NewsInfo"; 
+import ListingDetails from "../Screens/InfoCards/NewsInfo";
 import NextSeason from "../Screens/Scheduler List/NextSeason";
 import PresentSeason from "../Screens/Scheduler List/PresentSeason";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -15,7 +15,7 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 const bottomTab = createBottomTabNavigator();
 
-export default function HomeScreen() {
+function HomeView() {
     const theme = useTheme();
     return (
         <Tab.Navigator
@@ -31,10 +31,7 @@ export default function HomeScreen() {
                 tabBarStyle: { backgroundColor: theme.colors.headerStyle },
             })}
         >
-            <Tab.Screen
-                name="News feed"
-                component={HomeView}
-            />
+            <Tab.Screen name="News feed" component={Home} />
             <Tab.Screen name="Seasonal" component={BottomNavigation} />
             <Tab.Screen name="Recommendation" component={RecommendationScreen} />
         </Tab.Navigator>
@@ -42,18 +39,18 @@ export default function HomeScreen() {
 }
 
 
-function HomeView() {
+export default function HomeScreen() {
+
     return (
         <Stack.Navigator
             screenOptions={{ headerShown: false }}
+
             initialRouteName="Home"
         >
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen
-                options={{ presentation: "modal" }}
-                name="Info"
-                component={ListingDetails}
-            />
+            <Stack.Screen name="Home" component={HomeView} />
+            <Stack.Screen name="Info" component={ListingDetails} />
+            <Stack.Screen name="List" component={AnimeList} />
+            <Stack.Screen name="RecommdatScreen" component={RecommdatScreen} />
         </Stack.Navigator>
     );
 }
@@ -65,11 +62,7 @@ function PresentList() {
             initialRouteName="Home"
         >
             <Stack.Screen name="Home" component={PresentSeason} />
-            <Stack.Screen
-                options={{ presentation: "modal" }}
-                name="List"
-                component={AnimeList}
-            />
+
         </Stack.Navigator>
     );
 }
@@ -137,11 +130,6 @@ function RecommendationScreen() {
             initialRouteName="Home"
         >
             <Stack.Screen name="Home" component={RecommendationIndex} />
-            <Stack.Screen
-                options={{ presentation: "modal" }}
-                name="RecommdatScreen"
-                component={RecommdatScreen}
-            />
         </Stack.Navigator>
     );
 }

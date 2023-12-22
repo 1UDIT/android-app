@@ -21,6 +21,8 @@ const Home = ({ navigation }) => {
     const theme = useTheme();
     const { type, isConnected } = useNetInfo();
 
+    
+
     const getResult = async () => {
         // Check internet connection
         // You can use NetInfo here, as shown in the previous response. 
