@@ -1,14 +1,11 @@
 import { useTheme } from "@react-navigation/native";
-import Home from "../Screens/Home";
-import ListingDetails from "../Screens/InfoCards/NewsInfo";
+import Home from "../Screens/Home"; 
 import NextSeason from "../Screens/Scheduler List/NextSeason";
 import PresentSeason from "../Screens/Scheduler List/PresentSeason";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import AnimeList from "../Screens/InfoCards/AnimeList";
-import RecommdatScreen from "../Screens/Recommendation/RecommdatScreen";
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'; 
 import RecommendationIndex from "../Screens/Recommendation/Index";
 
 const Tab = createMaterialTopTabNavigator();
@@ -36,24 +33,7 @@ export default function HomeScreen(){
             <Tab.Screen name="Recommendation" component={RecommendationScreen} />
         </Tab.Navigator>
     );
-}
-
-
-// export default function HomeScreen() {
-
-//     return (
-//         <Stack.Navigator
-//             screenOptions={{ headerShown: false }}
-
-//             initialRouteName="Home"
-//         >
-//             <Stack.Screen name="Home" component={HomeView} />
-//             <Stack.Screen name="Info" component={ListingDetails} />
-//             <Stack.Screen name="List" component={AnimeList} />
-//             <Stack.Screen name="RecommdatScreen" component={RecommdatScreen} />
-//         </Stack.Navigator>
-//     );
-// }
+} 
 
 function PresentList() {
     return (
@@ -73,12 +53,7 @@ function NewList() {
             screenOptions={{ headerShown: false }}
             initialRouteName="Home"
         >
-            <Stack.Screen name="Home" component={NextSeason} />
-            <Stack.Screen
-                options={{ presentation: "modal" }}
-                name="List"
-                component={AnimeList}
-            />
+            <Stack.Screen name="Home" component={NextSeason} /> 
         </Stack.Navigator>
     );
 }

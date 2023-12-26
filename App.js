@@ -176,6 +176,7 @@ export default function App() {
         >
           <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeView} />
           <Stack.Screen name="Info" component={ListingDetails} />
+          <Stack.Screen name="Listing" component={ListingDetails} />
           <Stack.Screen name="List" component={AnimeList} />
           <Stack.Screen name="RecommdatScreen" component={RecommdatScreen} />
         </Stack.Navigator>

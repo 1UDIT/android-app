@@ -111,7 +111,7 @@ const TinderSwipe = ({ navigation }) => {
 
     if (dataIsReturned === true && data !== undefined) {
         return (
-            <View style={[styles.container, { backgroundColor: theme.background }]}>
+            <View style={[styles.container ]}>
                 <Swiper
                     ref={(ref) => { cardStack = ref; }}
                     cards={[...data]}
@@ -122,14 +122,14 @@ const TinderSwipe = ({ navigation }) => {
                                 title={item.title}
                                 subtitle={item.description}
                                 image={item.profile_img}
-                                onPress={() => navigation.navigate("Info", item)}
+                                onPress={() => navigation.navigate("Listing", item)}
                             />
                         )
                     }}
                     onSwiped={(cardIndex) => { getCardBack(cardIndex) }}
                     cardIndex={cardIndex}
                     onSwipedAll={onSwipedAll}
-                    containerStyle={{ backgroundColor: '#141414' }}
+                    containerStyle={{ backgroundColor: theme.background}}
                     stackSize={4}
                     showSecondCard={true}
                     cardStyle={{ height: 200 }}
