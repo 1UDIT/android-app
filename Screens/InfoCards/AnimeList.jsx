@@ -46,12 +46,7 @@ const AnimeList = ({ route, navigation }) => {
               </View>
             </View>
           </View>
-        </ScrollView>
-        <TouchableOpacity style={[styles.btn]} onPress={() => navigation.navigate('Home')}>
-          <View style={styles.searchIcon}>
-            <Icons name="arrow-back" size={20} color="#FFFFFF" />
-          </View>
-        </TouchableOpacity>
+        </ScrollView> 
       </View>
     </>
   );

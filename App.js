@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
-import { CommonActions, DrawerActions, NavigationContainer, useLinkBuilder } from '@react-navigation/native';
+import { CommonActions, DrawerActions, NavigationContainer, useLinkBuilder, useTheme } from '@react-navigation/native';
 import { get, save, saveString } from './storage';
 import { DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -12,6 +12,8 @@ import ScreenIndex from './Screens/MovieScreen/ScreenIndex';
 import { light, dark } from './colors';
 import HomeScreen from './Navigation/TopNavigation';
 import ListingDetails from './Screens/InfoCards/NewsInfo';
+import AnimeList from './Screens/InfoCards/AnimeList';
+import RecommdatScreen from './Screens/Recommendation/RecommdatScreen';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height  
 
@@ -119,54 +121,65 @@ function DarkToggle(props) {
 export const ThemeContext = React.createContext();
 
 
+function HomeView() { 
+  const theme = useTheme(); 
+  return (
+
+    <Drawer.Navigator
+      screenOptions={({ navigation }) => ({
+        drawerActiveTintColor: theme.colors.Activetext, 
+        // headerRight: (props) => (
+        //   <View style={styles.IconBtncontainer}>
+        //     {
+        //       showSearchBar === false ? <Icon name='search' onPress={() => setShowSearchBar(!showSearchBar)} size={30} />
+        //         :
+        //         <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsSearchBar} setShowSearchBar={setShowSearchBar}
+        //           showSearchBar={showSearchBar} />
+        //     }
+        //   </View>
+        // ),
+        // headerLeft: (props) => (
+        //   <Pressable android_ripple={{ color: '#666666', foreground: true, borderless: true, }} onPress={() => { navigation.openDrawer() }}>
+        //     <View style={styles.detailsConatiner}>
+        //       <Icon name='list-sharp' onPress={navigation.toggleDrawer} size={30} />
+        //     </View>
+        //   </Pressable>
+        // ),
+        drawerStyle: {
+          backgroundColor:theme.colors.headerStyle ,
+          width: 240,
+        },
+        headerStyle: {
+          height: 90,
+          backgroundColor: theme.colors.headerStyle 
+        },
+      })}
+      initialRouteName="Feed"
+      drawerContent={(props) => <DarkToggle {...props} />}
+    >
+      <Drawer.Screen name="Feed" component={HomeScreen} />
+      <Drawer.Screen name="Movie" component={MovieScreen} />
+      <Drawer.Screen name="Settings" component={DarkToggle} options={{ drawerLabel: () => null, }} />
+    </Drawer.Navigator >
+  );
+}
+
 export default function App() {
-  const [searchPhrase, setSearchPhrase] = useState("");
-  const [showSearchBar, setShowSearchBar] = useState(false);
   const [theme, setTheme] = useState('Light');
- 
 
   const themeData = { theme, setTheme };
   return (
     <ThemeContext.Provider value={themeData}>
       <NavigationContainer theme={theme === 'Light' ? light : dark}>
-        <Drawer.Navigator
-          screenOptions={({ navigation }) => ({
-            drawerActiveTintColor: theme === 'Light' ? light.colors.Activetext : dark.colors.Activetext,
-            drawerInactiveTintColor: theme === 'Light' ? light.colors.InActivetext : dark.colors.InActivetext,
-            // headerRight: (props) => (
-            //   <View style={styles.IconBtncontainer}>
-            //     {
-            //       showSearchBar === false ? <Icon name='search' onPress={() => setShowSearchBar(!showSearchBar)} size={30} />
-            //         :
-            //         <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} style={styles.detailsSearchBar} setShowSearchBar={setShowSearchBar}
-            //           showSearchBar={showSearchBar} />
-            //     }
-            //   </View>
-            // ),
-            // headerLeft: (props) => (
-            //   <Pressable android_ripple={{ color: '#666666', foreground: true, borderless: true, }} onPress={() => { navigation.openDrawer() }}>
-            //     <View style={styles.detailsConatiner}>
-            //       <Icon name='list-sharp' onPress={navigation.toggleDrawer} size={30} />
-            //     </View>
-            //   </Pressable>
-            // ),
-            drawerStyle: {
-              backgroundColor: theme === 'Light' ? light.colors.headerStyle : dark.colors.headerStyle,
-              width: 240,
-            },
-            headerStyle: {
-              height: 90,
-              backgroundColor: theme === 'Light' ? light.colors.headerStyle : dark.colors.headerStyle
-            },
-          })}
-          initialRouteName="Feed"
-          drawerContent={(props) => <DarkToggle {...props} />}
+        <Stack.Navigator
+          initialRouteName="Home"
         >
-          <Drawer.Screen name="Feed" component={HomeScreen} />
-          <Drawer.Screen name="Movie" component={MovieScreen} />
-          <Drawer.Screen name="Settings" component={DarkToggle} options={{ drawerLabel: () => null, }} />
-        </Drawer.Navigator >
-      </NavigationContainer >
+          <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeView} />
+          <Stack.Screen name="Info" component={ListingDetails} />
+          <Stack.Screen name="List" component={AnimeList} />
+          <Stack.Screen name="RecommdatScreen" component={RecommdatScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </ThemeContext.Provider>
   );
 }

@@ -15,7 +15,7 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 const bottomTab = createBottomTabNavigator();
 
-function HomeView() {
+export default function HomeScreen(){
     const theme = useTheme();
     return (
         <Tab.Navigator
@@ -39,21 +39,21 @@ function HomeView() {
 }
 
 
-export default function HomeScreen() {
+// export default function HomeScreen() {
 
-    return (
-        <Stack.Navigator
-            screenOptions={{ headerShown: false }}
+//     return (
+//         <Stack.Navigator
+//             screenOptions={{ headerShown: false }}
 
-            initialRouteName="Home"
-        >
-            <Stack.Screen name="Home" component={HomeView} />
-            <Stack.Screen name="Info" component={ListingDetails} />
-            <Stack.Screen name="List" component={AnimeList} />
-            <Stack.Screen name="RecommdatScreen" component={RecommdatScreen} />
-        </Stack.Navigator>
-    );
-}
+//             initialRouteName="Home"
+//         >
+//             <Stack.Screen name="Home" component={HomeView} />
+//             <Stack.Screen name="Info" component={ListingDetails} />
+//             <Stack.Screen name="List" component={AnimeList} />
+//             <Stack.Screen name="RecommdatScreen" component={RecommdatScreen} />
+//         </Stack.Navigator>
+//     );
+// }
 
 function PresentList() {
     return (
