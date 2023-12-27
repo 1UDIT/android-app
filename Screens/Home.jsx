@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Dimensions, FlatList, RefreshControl, StyleSheet, Text, ToastAndroid, View } from "react-native";
-import Card from "./Cards/card";
+import { ActivityIndicator, Button, Dimensions, FlatList, RefreshControl, StyleSheet, Text, ToastAndroid, View } from "react-native";
+import Dialog from "react-native-dialog";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 import { useTheme } from "@react-navigation/native";
@@ -18,10 +18,14 @@ const Home = ({ navigation }) => {
     const [isLoading, setisLoading] = useState(true);
     const [isOffline, setisOffline] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
+    const [visible, setVisible] = useState(false);
     const theme = useTheme();
     const { type, isConnected } = useNetInfo();
 
-    
+    const handleCancel = () => {
+        setVisible(false);
+    };
+
 
     const getResult = async () => {
         // Check internet connection
@@ -47,7 +51,7 @@ const Home = ({ navigation }) => {
             });
     }
     const onRefresh = async () => {
-       
+
         if (data?.length > 2) {
             setRefreshing(true)
             axios.get(`https://app-api-u735.onrender.com/News`,
@@ -88,7 +92,7 @@ const Home = ({ navigation }) => {
             console.error('Error retrieving data:', error)
         }
     };
- 
+
 
 
     useEffect(() => {
@@ -102,18 +106,19 @@ const Home = ({ navigation }) => {
         };
     }, []);
 
-    useEffect(() => { 
+    useEffect(() => {
         // Simulate fetching data from API
-        if (isConnected === true) {
+        if (isConnected === true) { 
             getResult();
         } else if (isConnected === false) {
+            setVisible(true)
             ToastAndroid.show('Offline Data Fetch', ToastAndroid.SHORT);
             getData();
         }
-    }, [isOnline]); 
-
-    return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}><Text>{isOnline === true ? 'online' : isOffline}</Text>
+    }, [isOnline]);
+    // { backgroundColor: theme.background }
+    return (<>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
             {
                 isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     <FlatList
@@ -129,8 +134,15 @@ const Home = ({ navigation }) => {
                         )}
                     />
             }
-
         </View>
+        <Dialog.Container visible={visible}>
+            <Dialog.Title>Data</Dialog.Title>
+            <Dialog.Description>
+                You Are Offline...
+            </Dialog.Description>
+            <Dialog.Button label="Ok" onPress={handleCancel} /> 
+        </Dialog.Container>
+    </>
     );
 };
 
@@ -138,7 +150,7 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: 20,
         flex: 1,
-        backgroundColor: "#f7f5f5",
+        backgroundColor: "#faf1e5",
         padding: 10,
         height: height,
         width: width

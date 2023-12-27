@@ -17,7 +17,7 @@ const Homecard = ({ title, subtitle, image, onPress }) => {
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={styles.container}>
+      <View style={[styles.cardContainer, styles.cardShadow]}>
         <Image
           style={styles.image}
           source={{ uri: image }}
@@ -32,9 +32,22 @@ const Homecard = ({ title, subtitle, image, onPress }) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
+  cardShadow: { 
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 10,
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 10,
+  },
+
+  cardContainer: {
+    borderRadius:20,
     backgroundColor: "white",
-    borderRadius: 25,
     overflow: "hidden",
     marginBottom: 20,
     flexDirection: 'row',
