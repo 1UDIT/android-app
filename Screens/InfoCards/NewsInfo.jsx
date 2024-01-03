@@ -34,19 +34,20 @@ const ListingDetails = ({ route, navigation }) => {
           <View style={styles.detailsContainer}>
             <Text style={[styles.title, { color: theme.colors.text }]}>{route.params.title}</Text>
             <Text style={[styles.subtitle, { color: theme.colors.text }]}>{route.params.description}</Text>
-            <View style={styles.shareContainer}>
-              <View style={styles.iconContainer}>
-                <Icon
-                  onPress={() => onShare(route.params.title)}
-                  name={"whatsapp"}
-                  size={40}
-                  backgroundColor="#00cc00"
-                />
-                <Text style={[styles.logoText, { color: theme.colors.text }]}>Share News Whats-App</Text>
-              </View>
-            </View>
           </View>
-        </ScrollView> 
+        </ScrollView>
+        <View style={styles.shareContainer}>
+          <View style={styles.iconContainer}>
+            <Icon
+              onPress={() => onShare(route.params.title)}
+              name={"whatsapp"}
+              size={40}
+              backgroundColor="#00cc00"
+            />
+            <Text style={[styles.logoText, { color: theme.colors.text }]}>Share News Whats-App</Text>
+          </View>
+        </View>
+
       </View>
     </>
   );
@@ -57,11 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width,
     height: height,
-  },
-  containerBox: {
-    flex: 1,
-    paddingBottom: 5,
-  },
+  }, 
   btn: {
     height: 50,
     backgroundColor: "red",
@@ -80,7 +77,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
-  detailsContainer: { padding: 20 },
+  detailsContainer: {
+    padding: 20,
+    flex: 1, 
+  },
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
@@ -92,10 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   shareContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    marginVertical: 20,
+    width: "100%",  
   },
   subtitle: {
     fontSize: 17,

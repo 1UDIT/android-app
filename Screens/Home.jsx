@@ -108,7 +108,7 @@ const Home = ({ navigation }) => {
 
     useEffect(() => {
         // Simulate fetching data from API
-        if (isConnected === true) { 
+        if (isConnected === true) {
             getResult();
         } else if (isConnected === false) {
             setVisible(true)
@@ -140,7 +140,7 @@ const Home = ({ navigation }) => {
             <Dialog.Description>
                 You Are Offline...
             </Dialog.Description>
-            <Dialog.Button label="Ok" onPress={handleCancel} /> 
+            <Dialog.Button label="Ok" onPress={handleCancel} />
         </Dialog.Container>
     </>
     );
