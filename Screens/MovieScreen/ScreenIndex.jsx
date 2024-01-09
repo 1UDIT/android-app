@@ -33,7 +33,7 @@ const TinderSwipe = ({ navigation }) => {
                 })
                 .then(response => {
                     setisLoading(false);
-                    Setdata(response.data);
+                    Setdata(response.data); 
                     AsyncStorage.setItem('Scheduler', JSON.stringify(response.data));
                 }).catch(error => {
                     console.log(error);

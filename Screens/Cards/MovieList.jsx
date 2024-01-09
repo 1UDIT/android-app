@@ -17,7 +17,7 @@ const MovieList = ({ title, subtitle, image, onPress }) => {
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={styles.container}>
+      <View style={[styles.container, styles.cardShadow]}>
         <Image
           style={styles.image}
           source={{ uri: image }}
@@ -31,22 +31,29 @@ const MovieList = ({ title, subtitle, image, onPress }) => {
   );
 };
 const styles = StyleSheet.create({
+  cardShadow: {
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 10,
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 10,
+  },
   container: {
-    backgroundColor: "black",
+    backgroundColor: "white",
     borderRadius: 25,
-    overflow: "hidden",
-    marginBottom: 20,
-    marginTop: 50,
+    overflow: "hidden", 
     borderColor: 'white',
-    borderWidth: 5,
-    marginBottom: 30,
+    borderWidth: 5, 
   },
   image: {
-    backgroundColor: "#121211",
-    width: width,
-    justifyContent: 'flex-start',
+    backgroundColor: "black",  
     height: undefined,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     aspectRatio: 1,
   },
   detailsConatiner: {

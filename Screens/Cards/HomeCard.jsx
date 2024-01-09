@@ -1,12 +1,12 @@
 import { useTheme } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
   Image,
   Text,
   TouchableWithoutFeedback,
-  Dimensions,
+  Dimensions
 } from "react-native";
 
 
@@ -14,10 +14,11 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 const Homecard = ({ title, subtitle, image, onPress }) => {
+ 
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={[styles.cardContainer, styles.cardShadow]}>
+      <View  style={[styles.cardContainer, styles.cardShadow]}>
         <Image
           style={styles.image}
           source={{ uri: image }}
@@ -27,7 +28,7 @@ const Homecard = ({ title, subtitle, image, onPress }) => {
           <Text style={styles.subtitle} numberOfLines={2}>{subtitle}</Text>
         </View>
 
-      </View>
+      </View >
     </TouchableWithoutFeedback>
   );
 };

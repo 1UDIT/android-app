@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Button, Dimensions, FlatList, RefreshControl, StyleSheet, Text, ToastAndroid, View } from "react-native";
+import { ActivityIndicator, Button, Dimensions, FlatList, RefreshControl, StyleSheet, Text, ToastAndroid, View, Animated } from "react-native";
 import Dialog from "react-native-dialog";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
@@ -93,7 +93,7 @@ const Home = ({ navigation }) => {
         }
     };
 
-
+    
 
     useEffect(() => {
         // Check internet connection
@@ -117,11 +117,16 @@ const Home = ({ navigation }) => {
         }
     }, [isOnline]);
     // { backgroundColor: theme.background }
+    const onEndReached = () => {
+        if (!isLoading) {
+            getResult();
+        }
+      };
     return (<>
-        <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <View style={[styles.container, { backgroundColor: theme.background}]}>
             {
                 isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
-                    <FlatList
+                    < FlatList
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                         data={data}
                         renderItem={({ item }) => (
@@ -132,6 +137,8 @@ const Home = ({ navigation }) => {
                                 onPress={() => navigation.navigate("Info", item)}
                             />
                         )}
+                        onEndReached={onEndReached}
+                        onEndReachedThreshold={0.5}
                     />
             }
         </View>
