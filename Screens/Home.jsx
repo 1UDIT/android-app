@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Button, Dimensions, FlatList, RefreshControl, StyleSheet, Text, ToastAndroid, View, Animated } from "react-native";
+import { ActivityIndicator, Button, Dimensions, FlatList, RefreshControl, StyleSheet, Text, ToastAndroid, View, Animated, Platform } from "react-native";
 import Dialog from "react-native-dialog";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
@@ -10,6 +10,8 @@ import Homecard from "./Cards/HomeCard";
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
+const NAVBAR_HEIGHT = 64;
+const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
 
 const Home = ({ navigation }) => {
@@ -21,6 +23,20 @@ const Home = ({ navigation }) => {
     const [visible, setVisible] = useState(false);
     const theme = useTheme();
     const { type, isConnected } = useNetInfo();
+
+    const [scrollY] = useState(new Animated.Value(0));
+    const diffClamp = Animated.diffClamp(scrollY, 0, 140); 
+
+
+
+    const navigationTranslateY = diffClamp.interpolate({
+        inputRange: [0, 60],
+        outputRange: [0, -30],
+        extrapolate: 'clamp',
+    });
+
+
+
 
     const handleCancel = () => {
         setVisible(false);
@@ -93,7 +109,7 @@ const Home = ({ navigation }) => {
         }
     };
 
-    
+
 
     useEffect(() => {
         // Check internet connection
@@ -121,14 +137,20 @@ const Home = ({ navigation }) => {
         if (!isLoading) {
             getResult();
         }
-      };
+    };
     return (<>
-        <View style={[styles.container, { backgroundColor: theme.background}]}>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
+            <Animated.View style={[{ transform: [{ translateY: navigationTranslateY }] }]}>
+                <Animated.Text style={[styles.navigationText]}>Your Navigation Content</Animated.Text>
+            </Animated.View>
+
             {
                 isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                     < FlatList
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                         data={data}
+                        onScroll={(e) => { scrollY.setValue(e.nativeEvent.contentOffset.y) }}
+                        scrollEventThrottle={16}
                         renderItem={({ item }) => (
                             <Homecard
                                 title={item.title}
@@ -154,8 +176,23 @@ const Home = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    navigation: {
+        height: 80,
+        backgroundColor: 'lightblue',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        zIndex: 2,
+    },
+    navigationText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
     container: {
-        paddingTop: 20,
+        paddingTop: 5,
         flex: 1,
         backgroundColor: "#faf1e5",
         padding: 10,
