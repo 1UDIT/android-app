@@ -29,7 +29,7 @@ const NextSeason = ({ navigation }) => {
     const [isLoading, setisLoading] = useState(true);
     const [value, setValue] = useState('All');
     const [refreshing, setRefreshing] = useState(false);
-    const { type, isConnected } = useNetInfo(); 
+    const { type, isConnected } = useNetInfo();
 
     const getResult = async () => {
         // Check internet connection
@@ -37,7 +37,7 @@ const NextSeason = ({ navigation }) => {
 
         if (isOnline) {
             // If there's internet connectivity, fetch and store new API data
-            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?SeasonType=Next`,
+            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?SeasonType=NEXT`,
                 {
                     auth: {
                         username: 'AnimeGo',
@@ -129,7 +129,7 @@ const NextSeason = ({ navigation }) => {
             // console.log(JSON.parse(data));
             getData();
         }
-    }, [isOnline]); 
+    }, [isOnline]);
 
 
     return (

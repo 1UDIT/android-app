@@ -24,16 +24,16 @@ const Home = ({ navigation }) => {
     const theme = useTheme();
     const { type, isConnected } = useNetInfo();
 
-    const [scrollY] = useState(new Animated.Value(0));
-    const diffClamp = Animated.diffClamp(scrollY, 0, 140); 
+    // const [scrollY] = useState(new Animated.Value(0));
+    // const diffClamp = Animated.diffClamp(scrollY, 0, 140);
 
 
 
-    const navigationTranslateY = diffClamp.interpolate({
-        inputRange: [0, 60],
-        outputRange: [0, -30],
-        extrapolate: 'clamp',
-    });
+    // const navigationTranslateY = diffClamp.interpolate({
+    //     inputRange: [0, 60],
+    //     outputRange: [0, -30],
+    //     extrapolate: 'clamp',
+    // });
 
 
 
@@ -140,9 +140,9 @@ const Home = ({ navigation }) => {
     };
     return (<>
         <View style={[styles.container, { backgroundColor: theme.background }]}>
-            <Animated.View style={[{ transform: [{ translateY: navigationTranslateY }] }]}>
+            {/* <Animated.View style={[{ transform: [{ translateY: navigationTranslateY }] }]}>
                 <Animated.Text style={[styles.navigationText]}>Your Navigation Content</Animated.Text>
-            </Animated.View>
+            </Animated.View> */}
 
             {
                 isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :

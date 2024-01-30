@@ -23,7 +23,7 @@ const Card = ({ title, date, image, onPress }) => {
           source={{ uri: image }}
         />
         <View style={styles.detailsConatiner}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title} numberOfLines={3}>{title}</Text>
           <Text style={styles.dateTitle}>{date}</Text>
         </View>
 

@@ -37,7 +37,7 @@ const PresentSeason = ({ navigation }) => {
 
         if (isOnline) {
             // If there's internet connectivity, fetch and store new API data
-            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?SeasonType=Prev`,
+            axios.get(`https://app-api-u735.onrender.com/Scheduler/data?SeasonType=PREV`,
                 {
                     auth: {
                         username: 'AnimeGo',
@@ -155,12 +155,16 @@ const PresentSeason = ({ navigation }) => {
                     isLoading === true ? <ActivityIndicator style={[styles.Indicatorcontainer, styles.horizontal]} size="large" color="#f5610a" /> :
                         <FlatList
                             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                            data={value === 'All'?data: data.filter((x) => x.day === value)}
+                            data={value === 'All' ? data : data.filter((x) => x.day === value)}
+                            numColumns={2}
+                            horizontal={false}
+                            keyExtractor={(item) => item.id}
                             renderItem={({ item }) => (
                                 <Card
                                     title={item.title}
                                     subtitle={item.description}
                                     image={item.profile_img}
+                                    date={item.date}
                                     onPress={() => navigation.navigate("List", item)}
                                 />
                             )}
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
         flexGrow: 0
     },
     container: {
-        paddingTop: 20,
+        paddingTop: 10,
         flex: 1,
         backgroundColor: "#f7f5f5",
         padding: 10,
